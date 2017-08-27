@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_myAccount"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="My Account" />
+        <item
+            android:id="@+id/nav_courses"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="Courses" />
+        <item
+            android:id="@+id/nav_myCourses"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:title="My Courses"/>
+        <item
+            android:id="@+id/nav_aboutUs"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About us"/>
+        <item
+            android:id="@+id/nav_sendProposal"
+            android:title="Send Proposal"
+            android:icon="@drawable/ic_email_black_24dp"/>
+        <item
+            android:id="@+id/nav_joinCompetition"
+            android:title="Join Competition"/>
+        <item
+            android:id="@+id/nav_contacts"
+            android:icon="@mipmap/ic_contacts_black_24dp"
+            android:title="Contacts"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/ic_settings_black_24dp"
+            android:title="Settings"/>
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="Log out"/>
+    </group>
+
+    <item android:title="Socials">
+        <menu>
+            <group android:id="@+id/soc_group"
+                android:checkableBehavior="single">
+                <item android:id="@+id/nav_twitter"
+                    android:icon="@mipmap/ic_twitter_box_black_24dp"
+                    android:title="Twitter"/>
+                <item android:id="@+id/nav_facebook"
+                    android:icon="@mipmap/ic_facebook_box_black_24dp"
+                    android:title="Facebook"/>
+            </group>
+        </menu>
+    </item>
+
+
+</menu>
