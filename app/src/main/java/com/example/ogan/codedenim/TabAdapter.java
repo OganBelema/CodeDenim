@@ -24,8 +24,6 @@ public class TabAdapter extends FragmentPagerAdapter {
                 return new MentorsFragment();
             case 3:
                 return new PitchFragment();
-            case 4:
-                return new ChatFragment();
 
         }
         return null;
@@ -46,8 +44,6 @@ public class TabAdapter extends FragmentPagerAdapter {
                 return "Leads";
             case 3:
                 return "Pitch";
-            case 4:
-                return "Chat";
         }
         return null;
     }

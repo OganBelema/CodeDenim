@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ogan.codedenim.Courses.CourseDetailActivity;
-import com.example.ogan.codedenim.Gson.Categories.CourseCategoryApi;
+import com.example.ogan.codedenim.CoursesByCategories;
+import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
 
 import com.example.ogan.codedenim.R;
 
@@ -24,9 +25,9 @@ import java.util.ArrayList;
 public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesRvAdaper.CategoriesVH> {
 
     Context context;
-    private ArrayList<CourseCategoryApi> categoryResult;
+    private ArrayList<CategoriesApus> categoryResult;
 
-    public CategoriesRvAdaper(ArrayList<CourseCategoryApi> myDataset) {
+    public CategoriesRvAdaper(ArrayList<CategoriesApus> myDataset) {
 
         categoryResult = myDataset;
     }
@@ -47,8 +48,8 @@ public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesRvAdaper.
     public void onBindViewHolder(CategoriesRvAdaper.CategoriesVH holder, final int position) {
 
 
-        String courseName = categoryResult.get(position).getCategoryName();
-        holder.categoryName.setText(courseName);
+        final String categoryName = categoryResult.get(position).getCategoryName();
+        holder.categoryName.setText(categoryName);
 
 
         /* Picasso.with(context).
@@ -59,19 +60,16 @@ public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesRvAdaper.
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, CourseDetailActivity.class);
+                int categoryId = categoryResult.get(position).getCourseCategoryId();
+
+                Intent intent = new Intent(context, CoursesByCategories.class);
+                intent.putExtra("CategoryId", categoryId);
+                intent.putExtra("categoryName", categoryName);
                 context.startActivity(intent);
 
             }
         });
 
-       /* holder.seeMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        }); */
 
     }
 

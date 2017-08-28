@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.example.ogan.codedenim.Adapters.CategoriesRvAdaper;
 import com.example.ogan.codedenim.Adapters.CoursesRvAdapter;
 import com.example.ogan.codedenim.Courses.CourseActivity;
-import com.example.ogan.codedenim.Gson.Categories.CourseCategoryApi;
+import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
 import com.example.ogan.codedenim.Gson.Categories.GetCategories;
 import com.example.ogan.codedenim.Gson.CourseGson.CoursesApi;
 import com.example.ogan.codedenim.Gson.CourseGson.GetCourses;
@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
     ArrayList<CoursesApi> results;
 
     GetCategories getCategories;
-    ArrayList<CourseCategoryApi> categoryApis;
+    ArrayList<CategoriesApus> categoryApis;
 
     private static final String url = "https://codedenim.azurewebsites.net/api/";
 
@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment {
 
         getCategories = retrofit.create(GetCategories.class);
 
+        //GET courses
         Call<ArrayList<CoursesApi>> call = courses.getCourses();
         call.enqueue(new Callback<ArrayList<CoursesApi>>() {
             @Override
@@ -125,10 +126,11 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Call<ArrayList<CourseCategoryApi>> categoriesCall = getCategories.getCategories();
-        categoriesCall.enqueue(new Callback<ArrayList<CourseCategoryApi>>() {
+        //GET categories
+        Call<ArrayList<CategoriesApus>> categoriesCall = getCategories.getCategories();
+        categoriesCall.enqueue(new Callback<ArrayList<CategoriesApus>>() {
             @Override
-            public void onResponse(Call<ArrayList<CourseCategoryApi>> call, Response<ArrayList<CourseCategoryApi>> response) {
+            public void onResponse(Call<ArrayList<CategoriesApus>> call, Response<ArrayList<CategoriesApus>> response) {
                 if(response.isSuccessful()){
                     categoryApis = response.body();
                     categoriesRvAdaper = new CategoriesRvAdaper(categoryApis);
@@ -137,9 +139,9 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CourseCategoryApi>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<CategoriesApus>> call, Throwable t) {
 
-                Log.e("error", t.getMessage());
+                Log.e("categories_error", t.getMessage());
             }
         });
 

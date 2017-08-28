@@ -35,6 +35,7 @@ import java.util.List;
 
 import com.example.ogan.codedenim.MainActivity;
 import com.example.ogan.codedenim.R;
+import com.example.ogan.codedenim.Register.CorperRegister;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -92,6 +93,15 @@ public class CorperLoginActivity extends AppCompatActivity implements LoaderCall
             public void onClick(View view) {
                 //attemptLogin();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button mCorperRegisterButton = (Button) findViewById(R.id.email_register_button);
+        mCorperRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CorperRegister.class);
                 startActivity(intent);
             }
         });

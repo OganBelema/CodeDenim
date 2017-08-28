@@ -43,7 +43,10 @@
         <activity
             android:name=".Login.StudentLoginActivity"
             android:label="@string/title_activity_student_login"
-            android:parentActivityName=".StarterActivity"></activity>
+            android:parentActivityName=".StarterActivity" />
+        <activity android:name=".Start" />
+        <activity android:name=".Register.CorperRegister" />
+        <activity android:name=".CoursesByCategories"></activity>
     </application>
 
 </manifest>
