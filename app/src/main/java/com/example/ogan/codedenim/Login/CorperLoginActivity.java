@@ -33,9 +33,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.ogan.codedenim.Corper;
 import com.example.ogan.codedenim.MainActivity;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.Register.CorperRegister;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -48,6 +56,10 @@ public class CorperLoginActivity extends AppCompatActivity implements LoaderCall
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    static final String url = "https://codedenim.azurewebsites.net/";
+
+    CorperLoginApi corperLoginApi;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -92,8 +104,45 @@ public class CorperLoginActivity extends AppCompatActivity implements LoaderCall
             @Override
             public void onClick(View view) {
                 //attemptLogin();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+
+                mLoginFormView.setVisibility(View.GONE);
+                mProgressView.setVisibility(View.VISIBLE);
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(url).
+                        addConverterFactory(GsonConverterFactory.create()).build();
+
+                corperLoginApi = retrofit.create(CorperLoginApi.class);
+
+                Call<ResponseBody> login = corperLoginApi.loginCorper(mEmailView.getText().toString().trim(),
+                        mPasswordView.getText().toString().trim(),
+                        "password");
+                login.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                        System.out.println(response.headers());
+                        System.out.println(response.errorBody());
+                        System.out.println(response.message());
+                        System.out.println(response.raw());
+
+                        if(response.isSuccessful()){
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        } else {
+                            mProgressView.setVisibility(View.GONE);
+                            mLoginFormView.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        mProgressView.setVisibility(View.GONE);
+                        mLoginFormView.setVisibility(View.VISIBLE);
+                        System.out.println(t.getMessage());
+
+                    }
+                });
+
             }
         });
 
