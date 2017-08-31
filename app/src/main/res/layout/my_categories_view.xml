@@ -5,7 +5,7 @@
     android:layout_width="100dp"
     android:layout_height="50dp"
     card_view:cardBackgroundColor="@android:color/white"
-    android:layout_margin="16dp">
+    android:layout_margin="8dp">
 
     <TextView
         android:id="@+id/categoriesTxt"

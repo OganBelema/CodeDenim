@@ -93,7 +93,7 @@ public class StudentLoginActivity extends AppCompatActivity implements LoaderCal
         });
 
         mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        mProgressView = findViewById(R.id.corper_register_progress);
     }
 
     private void populateAutoComplete() {

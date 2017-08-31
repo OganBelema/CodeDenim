@@ -9,15 +9,15 @@
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
-        app:tabGravity="center"
-        android:layout_gravity="center_horizontal"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabTextColor="#ffffff" />
+        app:tabGravity="fill"
+        android:layout_gravity="fill"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@color/tab_text_color" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

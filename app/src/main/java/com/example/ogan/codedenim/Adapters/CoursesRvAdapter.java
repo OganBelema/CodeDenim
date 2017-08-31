@@ -15,6 +15,7 @@ import com.example.ogan.codedenim.Gson.CourseGson.CoursesApi;
 import com.example.ogan.codedenim.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ogan on 8/13/17.
@@ -45,7 +46,7 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
     @Override
     public void onBindViewHolder(CoursesRvAdapter.CoursesVH holder, final int position) {
 
-        String courseName = courseResult.get(position).getCourseName();
+        final String courseName = courseResult.get(position).getCourseName();
         holder.courseName.setText(courseName);
 
        /* Picasso.with(context).
@@ -56,7 +57,18 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
             @Override
             public void onClick(View v) {
 
+                String courseCategory = courseResult.get(position).getCourseCategory().getCategoryName();
+                String courseCode = courseResult.get(position).getCourseCode();
+                int expectedTime = courseResult.get(position).getExpectedTime();
+                List<Object> instructors = courseResult.get(position).getInstructors();
+                String courseDescription = courseResult.get(position).getCourseDescription();
+
                 Intent intent = new Intent(context, CourseDetailActivity.class);
+                intent.putExtra("courseName", courseName);
+                intent.putExtra("courseDescription", courseDescription);
+                intent.putExtra("courseCategory", courseCategory);
+                intent.putExtra("courseCode", courseCode);
+                intent.putExtra("expectedTime", expectedTime);
                 context.startActivity(intent);
 
             }

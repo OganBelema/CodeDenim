@@ -17,6 +17,8 @@ public class Corper {
     private String Email;
     private String password;
     private String confirmPassword;
+    private String grant_type;
+    private String username;
 
     public Corper(String mCallUpNumber, String mCorperFirstName, String mCorperLastName, String mCorperGender, String mDateOfBirth,
            String mCorperNumber, String mNyscState, String mCorperInstitution, String mCorperDiscipline,
@@ -34,4 +36,5 @@ public class Corper {
         this.password = mCorperPassword;
         this.confirmPassword = mCorperConfirmPassword;
     }
+
 }

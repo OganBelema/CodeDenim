@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.ogan.codedenim.Adapters.CoursesByCategoriesRv;
 import com.example.ogan.codedenim.Adapters.CoursesRvAdapter;
@@ -30,6 +32,7 @@ public class CoursesByCategories extends AppCompatActivity {
     CoursesByCategoriesRv coursesByCategoriesAdapter;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Course> results;
+    ProgressBar progressBar;
 
 
     @Override
@@ -38,6 +41,7 @@ public class CoursesByCategories extends AppCompatActivity {
         setContentView(R.layout.activity_courses_by_categories);
 
         recyclerView = (RecyclerView) findViewById(R.id.cbbbbb);
+        progressBar = (ProgressBar) findViewById(R.id.pr_category);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
@@ -46,6 +50,9 @@ public class CoursesByCategories extends AppCompatActivity {
         categoryId = intent.getIntExtra("CategoryId", 0);
         String categoryName = intent.getStringExtra("categoryName");
         getSupportActionBar().setTitle("Courses in " + categoryName);
+        if(getSupportActionBar() != null ){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(url).
@@ -66,6 +73,8 @@ public class CoursesByCategories extends AppCompatActivity {
                     results = response.body().getCourses();
                     coursesByCategoriesAdapter = new CoursesByCategoriesRv(results);
                     recyclerView.setAdapter(coursesByCategoriesAdapter);
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
 
                 }
             }

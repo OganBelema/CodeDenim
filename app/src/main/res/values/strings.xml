@@ -24,4 +24,5 @@
         completions."
     </string>
     <string name="title_activity_student_login">Student Sign in</string>
+    <string name="title_activity_corper_reg">Corper Register</string>
 </resources>

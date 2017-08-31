@@ -23,7 +23,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Courses.CourseDetailActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".Courses.CourseActivity" />
         <activity
             android:name=".Courses.CourseActivity"
             android:parentActivityName=".MainActivity" />
@@ -44,9 +44,13 @@
             android:name=".Login.StudentLoginActivity"
             android:label="@string/title_activity_student_login"
             android:parentActivityName=".StarterActivity" />
-        <activity android:name=".Start" />
-        <activity android:name=".Register.CorperRegister" />
-        <activity android:name=".CoursesByCategories"></activity>
+        <activity
+            android:name=".CoursesByCategories"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Register.CorperReg"
+            android:label="@string/title_activity_corper_reg"
+            android:parentActivityName=".Login.CorperLoginActivity"></activity>
     </application>
 
 </manifest>

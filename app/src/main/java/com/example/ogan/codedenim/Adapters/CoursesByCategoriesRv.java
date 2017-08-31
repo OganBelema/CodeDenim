@@ -43,7 +43,9 @@ public class CoursesByCategoriesRv extends RecyclerView.Adapter<CoursesByCategor
     public void onBindViewHolder(CoursesByCategoriesVH holder, int position) {
 
         String courseName = coursesByCategory.get(position).getCourseName();
+        String courseDescription = coursesByCategory.get(position).getCourseDescription();
         holder.courses.setText(courseName);
+        holder.courseDescription.setText(courseDescription);
     }
 
     @Override
@@ -55,11 +57,13 @@ public class CoursesByCategoriesRv extends RecyclerView.Adapter<CoursesByCategor
     public class CoursesByCategoriesVH extends RecyclerView.ViewHolder{
 
         private TextView courses;
+        private TextView courseDescription;
 
         public CoursesByCategoriesVH(View view){
             super(view);
             context = view.getContext();
             courses = (TextView) view.findViewById(R.id.courses_txt);
+            courseDescription = (TextView) view.findViewById(R.id.courses_description_txt);
         }
     }
 

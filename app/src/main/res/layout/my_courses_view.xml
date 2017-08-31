@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:id="@+id/courseName"/>
     </LinearLayout>
