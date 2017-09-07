@@ -3,6 +3,8 @@ package com.example.ogan.codedenim.Courses;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +30,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         courseCategory = (TextView) findViewById(R.id.course_category);
         courseCode = (TextView) findViewById(R.id.course_code);
         expectedTime = (TextView) findViewById(R.id.course_expected_time);
+        Button button = (Button) findViewById(R.id.button_enroll);
 
         Intent intent = getIntent();
         String courseName = intent.getStringExtra("courseName");
@@ -36,11 +39,20 @@ public class CourseDetailActivity extends AppCompatActivity {
         String courseCode = intent.getStringExtra("courseCode");
         int expectedTime = intent.getIntExtra("expectedTime",0);
 
+
         this.courseName.setText("Course Name: " + courseName);
         this.courseDescription.setText("Course Description: " + courseDescription);
         this.courseCategory.setText("Course Category: " + courseCategory);
         this.courseCode.setText("Course Code: " + courseCode);
         this.expectedTime.setText(String.valueOf("Course Length: " + expectedTime));
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ModuleActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

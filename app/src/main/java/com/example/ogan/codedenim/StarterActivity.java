@@ -12,27 +12,28 @@ import com.example.ogan.codedenim.Login.StudentLoginActivity;
 
 public class StarterActivity extends AppCompatActivity {
 
-    private SwitchCompat switchCompat;
-    private Button getStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starter);
 
-        switchCompat = (SwitchCompat) findViewById(R.id.userPick);
-        getStarted = (Button) findViewById(R.id.button);
+        Button corperBtn = (Button) findViewById(R.id.button_corper);
+        Button studentBtn = (Button) findViewById(R.id.button_student);
 
-        getStarted.setOnClickListener(new View.OnClickListener() {
+        corperBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if(switchCompat.isChecked()){
-                    Intent intent = new Intent(getApplicationContext(), StudentLoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), CorperLoginActivity.class);
-                    startActivity(intent);
-                }
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CorperLoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        studentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), StudentLoginActivity.class);
+                startActivity(intent);
             }
         });
     }

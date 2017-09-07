@@ -50,7 +50,8 @@
         <activity
             android:name=".Register.CorperReg"
             android:label="@string/title_activity_corper_reg"
-            android:parentActivityName=".Login.CorperLoginActivity"></activity>
+            android:parentActivityName=".Login.CorperLoginActivity" />
+        <activity android:name=".Courses.ModuleActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 
 package com.example.ogan.codedenim.Gson.CourseGson;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -21,7 +22,7 @@ public class CoursesApi {
     private List<Object> instructors = null;
     @SerializedName("Modules")
     @Expose
-    private List<Module> modules = null;
+    private ArrayList<Module> modules = null;
     @SerializedName("CourseId")
     @Expose
     private Integer courseId;
@@ -79,11 +80,11 @@ public class CoursesApi {
         this.instructors = instructors;
     }
 
-    public List<Module> getModules() {
+    public ArrayList<Module> getModules() {
         return modules;
     }
 
-    public void setModules(List<Module> modules) {
+    public void setModules(ArrayList<Module> modules) {
         this.modules = modules;
     }
 

@@ -12,9 +12,11 @@ import android.widget.TextView;
 
 import com.example.ogan.codedenim.Courses.CourseDetailActivity;
 import com.example.ogan.codedenim.Gson.Categories.Course;
+import com.example.ogan.codedenim.Gson.CourseGson.Module;
 import com.example.ogan.codedenim.Gson.CourseGson.CoursesApi;
 import com.example.ogan.codedenim.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +58,9 @@ public class CoursesActivityAdapter extends RecyclerView.Adapter<CoursesActivity
                 String courseCode = courses.get(position).getCourseCode();
                 int expectedTime = courses.get(position).getExpectedTime();
                 List<Object> instructors = courses.get(position).getInstructors();
+                ArrayList<Module> modules = courses.get(position).getModules();
+
+
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("courseName", courseName);
