@@ -54,13 +54,11 @@ public class CoursesActivityAdapter extends RecyclerView.Adapter<CoursesActivity
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String courseImageUrl = "https://codedenim.azurewebsites.net/MaterialUpload/" +courses.get(position).getFileLocation();
+
                 String courseCategory = courses.get(position).getCourseCategory().getCategoryName();
                 String courseCode = courses.get(position).getCourseCode();
                 int expectedTime = courses.get(position).getExpectedTime();
-                List<Object> instructors = courses.get(position).getInstructors();
-                ArrayList<Module> modules = courses.get(position).getModules();
-
-
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("courseName", courseName);
@@ -68,6 +66,7 @@ public class CoursesActivityAdapter extends RecyclerView.Adapter<CoursesActivity
                 intent.putExtra("courseCategory", courseCategory);
                 intent.putExtra("courseCode", courseCode);
                 intent.putExtra("expectedTime", expectedTime);
+                intent.putExtra("courseImageUrl", courseImageUrl);
 
                 context.startActivity(intent);
 

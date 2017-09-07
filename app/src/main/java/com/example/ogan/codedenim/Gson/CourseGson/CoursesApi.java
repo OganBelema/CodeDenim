@@ -1,7 +1,6 @@
 
 package com.example.ogan.codedenim.Gson.CourseGson;
 
-import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,12 +16,15 @@ public class CoursesApi {
     @SerializedName("Enrollments")
     @Expose
     private List<Object> enrollments = null;
-    @SerializedName("Instructors")
-    @Expose
-    private List<Object> instructors = null;
     @SerializedName("Modules")
     @Expose
-    private ArrayList<Module> modules = null;
+    private List<Module> modules = null;
+    @SerializedName("StudentAssignedCourses")
+    @Expose
+    private List<Object> studentAssignedCourses = null;
+    @SerializedName("TutorCourses")
+    @Expose
+    private List<Object> tutorCourses = null;
     @SerializedName("CourseId")
     @Expose
     private Integer courseId;
@@ -47,6 +49,15 @@ public class CoursesApi {
     @SerializedName("Points")
     @Expose
     private Integer points;
+    @SerializedName("CourseImage")
+    @Expose
+    private Object courseImage;
+    @SerializedName("FileLocation")
+    @Expose
+    private String fileLocation;
+    @SerializedName("File")
+    @Expose
+    private Object file;
 
     public List<Object> getAssesmentQuestionAnswers() {
         return assesmentQuestionAnswers;
@@ -72,20 +83,28 @@ public class CoursesApi {
         this.enrollments = enrollments;
     }
 
-    public List<Object> getInstructors() {
-        return instructors;
-    }
-
-    public void setInstructors(List<Object> instructors) {
-        this.instructors = instructors;
-    }
-
-    public ArrayList<Module> getModules() {
+    public List<Module> getModules() {
         return modules;
     }
 
-    public void setModules(ArrayList<Module> modules) {
+    public void setModules(List<Module> modules) {
         this.modules = modules;
+    }
+
+    public List<Object> getStudentAssignedCourses() {
+        return studentAssignedCourses;
+    }
+
+    public void setStudentAssignedCourses(List<Object> studentAssignedCourses) {
+        this.studentAssignedCourses = studentAssignedCourses;
+    }
+
+    public List<Object> getTutorCourses() {
+        return tutorCourses;
+    }
+
+    public void setTutorCourses(List<Object> tutorCourses) {
+        this.tutorCourses = tutorCourses;
     }
 
     public Integer getCourseId() {
@@ -150,6 +169,30 @@ public class CoursesApi {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+
+    public Object getCourseImage() {
+        return courseImage;
+    }
+
+    public void setCourseImage(Object courseImage) {
+        this.courseImage = courseImage;
+    }
+
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+    }
+
+    public Object getFile() {
+        return file;
+    }
+
+    public void setFile(Object file) {
+        this.file = file;
     }
 
 }

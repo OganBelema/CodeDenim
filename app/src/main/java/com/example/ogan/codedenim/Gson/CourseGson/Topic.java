@@ -9,7 +9,7 @@ public class Topic {
 
     @SerializedName("MaterialUploads")
     @Expose
-    private List<Object> materialUploads = null;
+    private List<MaterialUpload> materialUploads = null;
     @SerializedName("Posts")
     @Expose
     private List<Object> posts = null;
@@ -44,11 +44,11 @@ public class Topic {
     @Expose
     private Integer expectedTime;
 
-    public List<Object> getMaterialUploads() {
+    public List<MaterialUpload> getMaterialUploads() {
         return materialUploads;
     }
 
-    public void setMaterialUploads(List<Object> materialUploads) {
+    public void setMaterialUploads(List<MaterialUpload> materialUploads) {
         this.materialUploads = materialUploads;
     }
 

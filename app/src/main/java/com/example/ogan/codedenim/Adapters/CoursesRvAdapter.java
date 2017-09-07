@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.ogan.codedenim.Courses.CourseDetailActivity;
 import com.example.ogan.codedenim.Gson.CourseGson.CoursesApi;
 import com.example.ogan.codedenim.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +50,10 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
         final String courseName = courseResult.get(position).getCourseName();
         holder.courseName.setText(courseName);
 
-       /* Picasso.with(context).
-                load(courseResult.get(position).getSnippet().getThumbnails().getMedium().getUrl()).
-                into(holder.courseImage); */
+        final String courseImageUrl = "https://codedenim.azurewebsites.net/MaterialUpload/" +courseResult.get(position).getFileLocation();
+
+       Picasso.with(context).
+                load(courseImageUrl).into(holder.courseImage);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +62,6 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
                 String courseCategory = courseResult.get(position).getCourseCategory().getCategoryName();
                 String courseCode = courseResult.get(position).getCourseCode();
                 int expectedTime = courseResult.get(position).getExpectedTime();
-                List<Object> instructors = courseResult.get(position).getInstructors();
                 String courseDescription = courseResult.get(position).getCourseDescription();
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
@@ -69,6 +70,7 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
                 intent.putExtra("courseCategory", courseCategory);
                 intent.putExtra("courseCode", courseCode);
                 intent.putExtra("expectedTime", expectedTime);
+                intent.putExtra("courseImageUrl", courseImageUrl);
                 context.startActivity(intent);
 
             }

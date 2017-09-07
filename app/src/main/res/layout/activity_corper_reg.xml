@@ -75,8 +75,10 @@
             <!-- Gender drop-down spinner -->
             <Spinner
                 android:id="@+id/spinner_gender"
+                android:padding="16dp"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:spinnerMode="dropdown"/>
 
             <android.support.design.widget.TextInputLayout
@@ -113,6 +115,8 @@
                 android:id="@+id/nysc_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="16dp"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:spinnerMode="dropdown"/>
 
             <android.support.design.widget.TextInputLayout

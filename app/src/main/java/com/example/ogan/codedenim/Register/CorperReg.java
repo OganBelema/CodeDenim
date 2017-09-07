@@ -153,7 +153,7 @@ public class CorperReg extends AppCompatActivity {
             // Because AdapterView is an abstract class, onNothingSelected must be defined
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                nyscState = "Select State";
+                nyscState = "Select NYSC State";
             }
         });
     }
@@ -225,6 +225,10 @@ public class CorperReg extends AppCompatActivity {
         // Check for empty call up number
         if (TextUtils.isEmpty(callUpNumber)) {
             mCallUpNumber.setError(getString(R.string.error_field_required));
+            focusView = mCallUpNumber;
+            cancel = true;
+        } else if (!isCallUpNoValid(callUpNumber)) {
+            mCallUpNumber.setError("Call up number is invalid");
             focusView = mCallUpNumber;
             cancel = true;
         }
@@ -306,6 +310,11 @@ public class CorperReg extends AppCompatActivity {
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
+    }
+
+    private boolean isCallUpNoValid(String callUpNo) {
+
+        return callUpNo.length() == 20;
     }
 
 
