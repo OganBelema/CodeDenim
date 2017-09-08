@@ -1,4 +1,4 @@
-package com.example.ogan.codedenim;
+package com.example.ogan.codedenim.Courses;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.ogan.codedenim.Adapters.CoursesByCategoriesRv;
-import com.example.ogan.codedenim.Adapters.CoursesRvAdapter;
 import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
 import com.example.ogan.codedenim.Gson.Categories.Course;
 import com.example.ogan.codedenim.Gson.Categories.GetCourses;
+import com.example.ogan.codedenim.R;
 
 import java.util.ArrayList;
 

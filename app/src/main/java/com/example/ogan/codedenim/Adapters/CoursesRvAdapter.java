@@ -62,6 +62,7 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
                 String courseCategory = courseResult.get(position).getCourseCategory().getCategoryName();
                 String courseCode = courseResult.get(position).getCourseCode();
                 int expectedTime = courseResult.get(position).getExpectedTime();
+                int courseId = courseResult.get(position).getCourseId();
                 String courseDescription = courseResult.get(position).getCourseDescription();
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
@@ -71,6 +72,7 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
                 intent.putExtra("courseCode", courseCode);
                 intent.putExtra("expectedTime", expectedTime);
                 intent.putExtra("courseImageUrl", courseImageUrl);
+                intent.putExtra("courseId", courseId);
                 context.startActivity(intent);
 
             }
@@ -88,7 +90,7 @@ public class CoursesRvAdapter extends RecyclerView.Adapter<CoursesRvAdapter.Cour
 
     @Override
     public int getItemCount() {
-        return courseResult.size();
+        return 1;
     }
 
     //View Holders

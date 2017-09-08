@@ -1,12 +1,15 @@
 package com.example.ogan.codedenim.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ogan.codedenim.Courses.CourseDetailActivity;
 import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
 import com.example.ogan.codedenim.Gson.Categories.Course;
 import com.example.ogan.codedenim.R;
@@ -40,12 +43,34 @@ public class CoursesByCategoriesRv extends RecyclerView.Adapter<CoursesByCategor
     }
 
     @Override
-    public void onBindViewHolder(CoursesByCategoriesVH holder, int position) {
+    public void onBindViewHolder(CoursesByCategoriesVH holder, final int position) {
 
-        String courseName = coursesByCategory.get(position).getCourseName();
-        String courseDescription = coursesByCategory.get(position).getCourseDescription();
+        final String courseName = coursesByCategory.get(position).getCourseName();
+        final String courseDescription = coursesByCategory.get(position).getCourseDescription();
         holder.courses.setText(courseName);
         holder.courseDescription.setText(courseDescription);
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String courseImageUrl = "https://codedenim.azurewebsites.net/MaterialUpload/" +coursesByCategory.get(position).getFileLocation();
+
+                //String courseCategory = coursesByCategory.get(position).g();
+                String courseCode = coursesByCategory.get(position).getCourseCode();
+                int expectedTime = coursesByCategory.get(position).getExpectedTime();
+
+                Intent intent = new Intent(context, CourseDetailActivity.class);
+                intent.putExtra("courseName", courseName);
+                intent.putExtra("courseDescription", courseDescription);
+                //intent.putExtra("courseCategory", courseCategory);
+                intent.putExtra("courseCode", courseCode);
+                intent.putExtra("expectedTime", expectedTime);
+                intent.putExtra("courseImageUrl", courseImageUrl);
+
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -58,12 +83,14 @@ public class CoursesByCategoriesRv extends RecyclerView.Adapter<CoursesByCategor
 
         private TextView courses;
         private TextView courseDescription;
+        private LinearLayout linearLayout;
 
         public CoursesByCategoriesVH(View view){
             super(view);
             context = view.getContext();
             courses = (TextView) view.findViewById(R.id.courses_txt);
             courseDescription = (TextView) view.findViewById(R.id.courses_description_txt);
+            linearLayout = (LinearLayout) view.findViewById(R.id.course_linear_layout);
         }
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group>
         <item
             android:id="@+id/nav_myAccount"
             android:icon="@drawable/ic_person_black_24dp"
@@ -24,11 +24,8 @@
             android:icon="@drawable/ic_email_black_24dp"/>
         <item
             android:id="@+id/nav_joinCompetition"
-            android:title="Join Competition"/>
-        <item
-            android:id="@+id/nav_contacts"
-            android:icon="@mipmap/ic_contacts_black_24dp"
-            android:title="Contacts"/>
+            android:title="Join Competition"
+            android:icon="@drawable/ic_grade_black_24dp"/>
         <item
             android:id="@+id/nav_setting"
             android:icon="@mipmap/ic_settings_black_24dp"

@@ -1,5 +1,5 @@
 
-package com.example.ogan.codedenim.Gson.Categories;
+package com.example.ogan.codedenim.Gson.Module;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -10,12 +10,15 @@ public class Course {
     @SerializedName("AssesmentQuestionAnswers")
     @Expose
     private List<Object> assesmentQuestionAnswers = null;
+    @SerializedName("CourseCategory")
+    @Expose
+    private CourseCategory courseCategory;
     @SerializedName("Enrollments")
     @Expose
     private List<Object> enrollments = null;
     @SerializedName("Modules")
     @Expose
-    private List<Module> modules = null;
+    private List<Object> modules = null;
     @SerializedName("StudentAssignedCourses")
     @Expose
     private List<Object> studentAssignedCourses = null;
@@ -64,6 +67,14 @@ public class Course {
         this.assesmentQuestionAnswers = assesmentQuestionAnswers;
     }
 
+    public CourseCategory getCourseCategory() {
+        return courseCategory;
+    }
+
+    public void setCourseCategory(CourseCategory courseCategory) {
+        this.courseCategory = courseCategory;
+    }
+
     public List<Object> getEnrollments() {
         return enrollments;
     }
@@ -72,11 +83,11 @@ public class Course {
         this.enrollments = enrollments;
     }
 
-    public List<Module> getModules() {
+    public List<Object> getModules() {
         return modules;
     }
 
-    public void setModules(List<Module> modules) {
+    public void setModules(List<Object> modules) {
         this.modules = modules;
     }
 

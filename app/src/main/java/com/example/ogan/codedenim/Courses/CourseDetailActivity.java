@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.ogan.codedenim.R;
@@ -36,19 +34,25 @@ public class CourseDetailActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) findViewById(R.id.course_detail_img);
 
         Intent intent = getIntent();
-        String courseName = intent.getStringExtra("courseName");
+        final String courseName = intent.getStringExtra("courseName");
         String courseDescription = intent.getStringExtra("courseDescription");
         String courseCategory = intent.getStringExtra("courseCategory");
         String courseCode = intent.getStringExtra("courseCode");
         int expectedTime = intent.getIntExtra("expectedTime",0);
         String courseImageUrl = intent.getStringExtra("courseImageUrl");
+        final int courseId = intent.getIntExtra("courseId", 0);
 
         Picasso.with(getApplicationContext()).load(courseImageUrl).into(imageView);
+
+        if(courseCategory == null){
+            this.courseCategory.setVisibility(View.GONE);
+        } else {
+            this.courseCategory.setText("Course Category: " + courseCategory);
+        }
 
 
         this.courseName.setText("Course Name: " + courseName);
         this.courseDescription.setText("Course Description: " + courseDescription);
-        this.courseCategory.setText("Course Category: " + courseCategory);
         this.courseCode.setText("Course Code: " + courseCode);
         this.expectedTime.setText(String.valueOf("Course Length: " + expectedTime));
 
@@ -56,6 +60,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), ModuleActivity.class);
+                intent.putExtra("courseId", courseId);
+                intent.putExtra("courseName", courseName);
                 startActivity(intent);
             }
         });

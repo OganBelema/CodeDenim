@@ -26,6 +26,7 @@ import java.io.IOException;
 import com.example.ogan.codedenim.MainActivity;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.Register.CorperReg;
+import com.example.ogan.codedenim.SessionManagement.UserSessionManager;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -43,6 +44,9 @@ public class CorperLoginActivity extends AppCompatActivity {
 
     CorperLoginApi corperLoginApi;
 
+    // User Session Manager Class
+    UserSessionManager session;
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -58,6 +62,10 @@ public class CorperLoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_corper_login);
+
+        // User Session Manager
+        session = new UserSessionManager(getApplicationContext());
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -224,6 +232,7 @@ public class CorperLoginActivity extends AppCompatActivity {
                 Call<ResponseBody> login = corperLoginApi.loginCorper(mEmail, mPassword, "password");
                 Response<ResponseBody> response = login.execute();
                 if (response.isSuccessful()){
+                    session.createUserLoginSession(mEmail, mPassword);
                     return true;
                 }
             } catch (IOException e){

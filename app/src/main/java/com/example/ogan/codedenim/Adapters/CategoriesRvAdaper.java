@@ -7,11 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ogan.codedenim.Courses.CourseDetailActivity;
-import com.example.ogan.codedenim.CoursesByCategories;
+import com.example.ogan.codedenim.Courses.CoursesByCategories;
 import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
 
 import com.example.ogan.codedenim.R;

@@ -59,6 +59,7 @@ public class CoursesActivityAdapter extends RecyclerView.Adapter<CoursesActivity
                 String courseCategory = courses.get(position).getCourseCategory().getCategoryName();
                 String courseCode = courses.get(position).getCourseCode();
                 int expectedTime = courses.get(position).getExpectedTime();
+                int courseId = courses.get(position).getCourseId();
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("courseName", courseName);
@@ -67,6 +68,7 @@ public class CoursesActivityAdapter extends RecyclerView.Adapter<CoursesActivity
                 intent.putExtra("courseCode", courseCode);
                 intent.putExtra("expectedTime", expectedTime);
                 intent.putExtra("courseImageUrl", courseImageUrl);
+                intent.putExtra("courseId", courseId);
 
                 context.startActivity(intent);
 

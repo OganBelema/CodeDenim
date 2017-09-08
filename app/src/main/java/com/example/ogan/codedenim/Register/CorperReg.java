@@ -201,12 +201,16 @@ public class CorperReg extends AppCompatActivity {
             mCorperPassword.setError(getString(R.string.error_field_required));
             focusView = mCorperPassword;
             cancel = true;
+        } else if(!isPasswordValid(password)){
+            mCorperPassword.setError(getString(R.string.error_invalid_password));
+            focusView = mCorperPassword;
+            cancel = true;
         }
 
 
         // Check for a empty confirm password or if is the same with password
         if (TextUtils.isEmpty(corperConfirmPassword) || !corperConfirmPassword.equals(password)) {
-            mCorperPassword.setError(getString(R.string.error_invalid_password));
+            mCorperPassword.setError(getString(R.string.error_incorrect_password));
             focusView = mCorperConfirmPassword;
             cancel = true;
         }
@@ -315,6 +319,11 @@ public class CorperReg extends AppCompatActivity {
     private boolean isCallUpNoValid(String callUpNo) {
 
         return callUpNo.length() == 20;
+    }
+
+    private boolean isPasswordValid(String password) {
+
+        return password.length() > 5;
     }
 
 

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:context="com.example.ogan.codedenim.CoursesByCategories">
+        tools:context="com.example.ogan.codedenim.Courses.CoursesByCategories">
 
     </android.support.v7.widget.RecyclerView>
 
