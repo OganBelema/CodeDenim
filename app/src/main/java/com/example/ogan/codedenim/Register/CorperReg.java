@@ -3,38 +3,29 @@ package com.example.ogan.codedenim.Register;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ogan.codedenim.Corper;
 import com.example.ogan.codedenim.R;
+import com.example.ogan.codedenim.ServiceGenerator;
 
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A login screen that offers login via email/password.
@@ -318,7 +309,7 @@ public class CorperReg extends AppCompatActivity {
 
     private boolean isCallUpNoValid(String callUpNo) {
 
-        return callUpNo.length() == 20;
+        return callUpNo.length() > 5;
     }
 
     private boolean isPasswordValid(String password) {
@@ -406,10 +397,8 @@ public class CorperReg extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(url).
-                    addConverterFactory(GsonConverterFactory.create()).build();
 
-            corperRegisterApi = retrofit.create(CorperRegisterApi.class);
+            corperRegisterApi = ServiceGenerator.createService(CorperRegisterApi.class);
 
             Call<ResponseBody> register = corperRegisterApi.registerCorper(new Corper(mCallUpNumber,
                     mCorperFirstName,mCorperLastName,mCorperGender,mDateOfBirth,mCorperNumber,
@@ -426,7 +415,7 @@ public class CorperReg extends AppCompatActivity {
                         System.out.println("headers: " + response.headers());
                         System.out.println("raw: " + response.raw());
                         System.out.println(stringResponse);
-                        finish();
+                        //finish();
                         return true;
                         // Do whatever you want with the String
                     } catch (IOException e) {
@@ -437,6 +426,7 @@ public class CorperReg extends AppCompatActivity {
                     System.out.println(response.message());
                     System.out.println("headers: " + response.headers());
                     System.out.println("raw: " + response.raw());
+                    Toast.makeText(getApplicationContext(), "Registration Failed due to " + response.errorBody(), Toast.LENGTH_SHORT).show();
 
                 }
             } catch (IOException e){
@@ -454,6 +444,7 @@ public class CorperReg extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
+                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 Toast.makeText(getApplicationContext(), "Error registering", Toast.LENGTH_SHORT).show();
