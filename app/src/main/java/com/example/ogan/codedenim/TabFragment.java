@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ogan.codedenim.Adapters.TabAdapter;
+import com.example.ogan.codedenim.adapters.TabAdapter;
 
 
 public class TabFragment extends Fragment {

@@ -1,79 +1,90 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <FrameLayout
+    android:id="@+id/home_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent"
-            android:id="@+id/linearView"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="16dp"
-            android:visibility="invisible"
-            tools:context="com.example.ogan.codedenim.HomeFragment">
-            <RelativeLayout
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:visibility="invisible"
+                tools:context="com.example.ogan.codedenim.HomeFragment">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="16dp"
+                        android:text="Courses"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/see_more_courses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="6dp"
+                        android:text="See more"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_myCourses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:layout_alignParentLeft="true"
-                    android:text="Courses"
-                    android:textSize="25sp"/>
+                    android:text="Categories"
+                    android:textSize="25sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_News"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/see_more_courses"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="6dp"
-                    android:text="See more"
-                    android:textSize="15sp"/>
-            </RelativeLayout>
+                    android:layout_marginLeft="16dp"
+                    android:text="Partners"
+                    android:textSize="25sp" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_partners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_myCourses" />
-
-            <TextView
+            <ProgressBar
+                android:id="@+id/loading_spinner"
+                style="@style/Widget.AppCompat.ProgressBar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="Categories"
-                android:textSize="25sp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/rv_News"/>
+                android:visibility="visible" />
+        </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Partners"
-                android:layout_marginLeft="16dp"
-                android:textSize="25sp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_partners"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/loading_spinner"
-            style="@style/Widget.AppCompat.ProgressBar"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"/>
-    </FrameLayout>
-
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

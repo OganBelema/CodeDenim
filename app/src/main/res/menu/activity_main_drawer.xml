@@ -7,21 +7,13 @@
             android:icon="@drawable/ic_person_black_24dp"
             android:title="My Account" />
         <item
-            android:id="@+id/nav_courses"
-            android:icon="@drawable/ic_library_books_black_24dp"
-            android:title="Courses" />
-        <item
             android:id="@+id/nav_myCourses"
             android:icon="@drawable/ic_school_black_24dp"
             android:title="My Courses"/>
         <item
-            android:id="@+id/nav_aboutUs"
-            android:icon="@drawable/ic_info_black_24dp"
-            android:title="About us"/>
-        <item
-            android:id="@+id/nav_sendProposal"
-            android:title="Send Proposal"
-            android:icon="@drawable/ic_email_black_24dp"/>
+            android:id="@+id/nav_courses"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="Courses" />
         <item
             android:id="@+id/nav_joinCompetition"
             android:title="Join Competition"
@@ -30,6 +22,10 @@
             android:id="@+id/nav_setting"
             android:icon="@mipmap/ic_settings_black_24dp"
             android:title="Settings"/>
+        <item
+            android:id="@+id/nav_aboutUs"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="About us"/>
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_exit_to_app_black_24dp"

@@ -4,6 +4,7 @@ package com.example.ogan.codedenim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,23 +14,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.ogan.codedenim.Adapters.CategoriesRvAdaper;
-import com.example.ogan.codedenim.Adapters.CoursesRvAdapter;
-import com.example.ogan.codedenim.Courses.CourseActivity;
-import com.example.ogan.codedenim.Gson.Categories.CategoriesApus;
-import com.example.ogan.codedenim.Gson.Categories.GetCategories;
-import com.example.ogan.codedenim.Gson.CourseGson.CoursesApi;
-import com.example.ogan.codedenim.Gson.CourseGson.GetCourses;
-
+import com.example.ogan.codedenim.adapters.CategoriesRvAdaper;
+import com.example.ogan.codedenim.adapters.CoursesRvAdapter;
+import com.example.ogan.codedenim.courses.CourseActivity;
+import com.example.ogan.codedenim.gson.Categories.CategoryApus;
+import com.example.ogan.codedenim.gson.Categories.GetCategories;
+import com.example.ogan.codedenim.gson.Courses.CourseApus;
+import com.example.ogan.codedenim.gson.Courses.GetCourses;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -49,15 +48,11 @@ public class HomeFragment extends Fragment {
     LinearLayout linearLayout;
     ProgressBar progressBar;
     GetCourses courses;
-    ArrayList<CoursesApi> results;
+    ArrayList<CourseApus> results;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     GetCategories getCategories;
-    ArrayList<CategoriesApus> categoryApis;
-
-    private static final String url = "https://codedenim.azurewebsites.net/api/";
-
-
-
+    ArrayList<CategoryApus> categoryApis;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,6 +67,15 @@ public class HomeFragment extends Fragment {
 
         linearLayout = (LinearLayout) v.findViewById(R.id.linearView);
         progressBar = (ProgressBar) v.findViewById(R.id.loading_spinner);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.home_swipe);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
 
         seeMoreCourses = (TextView) v.findViewById(R.id.see_more_courses);
         seeMoreCourses.setOnClickListener(new View.OnClickListener() {
@@ -92,23 +96,15 @@ public class HomeFragment extends Fragment {
         coursesRv.setLayoutManager(linearLayoutManager);
         sponsorsRv.setLayoutManager(partnerLayoutManager);
 
+        courses = ServiceGenerator.createService(GetCourses.class);
 
-
-
-
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(url).
-                addConverterFactory(GsonConverterFactory.create()).build();
-
-        courses = retrofit.create(GetCourses.class);
-
-        getCategories = retrofit.create(GetCategories.class);
+        getCategories = ServiceGenerator.createService(GetCategories.class);
 
         //GET courses
-        Call<ArrayList<CoursesApi>> call = courses.getCourses();
-        call.enqueue(new Callback<ArrayList<CoursesApi>>() {
+        Call<ArrayList<CourseApus>> call = courses.getCourses();
+        call.enqueue(new Callback<ArrayList<CourseApus>>() {
             @Override
-            public void onResponse(Call<ArrayList<CoursesApi>> call, Response<ArrayList<CoursesApi>> response) {
+            public void onResponse(Call<ArrayList<CourseApus>> call, Response<ArrayList<CourseApus>> response) {
                 if(response.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
                     results = response.body();
@@ -120,17 +116,19 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CoursesApi>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<CourseApus>> call, Throwable t) {
 
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(v.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
             }
         });
 
         //GET categories
-        Call<ArrayList<CategoriesApus>> categoriesCall = getCategories.getCategories();
-        categoriesCall.enqueue(new Callback<ArrayList<CategoriesApus>>() {
+        Call<ArrayList<CategoryApus>> categoriesCall = getCategories.getCategories();
+        categoriesCall.enqueue(new Callback<ArrayList<CategoryApus>>() {
             @Override
-            public void onResponse(Call<ArrayList<CategoriesApus>> call, Response<ArrayList<CategoriesApus>> response) {
+            public void onResponse(Call<ArrayList<CategoryApus>> call, Response<ArrayList<CategoryApus>> response) {
                 if(response.isSuccessful()){
                     categoryApis = response.body();
                     categoriesRvAdaper = new CategoriesRvAdaper(categoryApis);
@@ -139,7 +137,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CategoriesApus>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<CategoryApus>> call, Throwable t) {
 
                 Log.e("categories_error", t.getMessage());
             }

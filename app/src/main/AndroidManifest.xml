@@ -27,33 +27,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Courses.CourseDetailActivity"
-            android:parentActivityName=".Courses.CourseActivity" />
+            android:name=".courses.CourseDetailActivity"
+            android:parentActivityName=".courses.CourseActivity" />
         <activity
-            android:name=".Courses.CourseActivity"
+            android:name=".courses.CourseActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Login.CorperLoginActivity"
+            android:name=".login.CorperLoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".StarterActivity" />
         <activity
             android:name=".StarterActivity"
-            android:theme="@style/AppTheme.NoActionBar.Starter">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar.Starter" />
         <activity
-            android:name=".Login.StudentLoginActivity"
+            android:name=".login.StudentLoginActivity"
             android:label="@string/title_activity_student_login"
             android:parentActivityName=".StarterActivity" />
         <activity
-            android:name=".Courses.CoursesByCategories"
+            android:name=".courses.CoursesByCategories"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Register.CorperReg"
+            android:name=".register.CorperReg"
             android:label="@string/title_activity_corper_reg"
-            android:parentActivityName=".Login.CorperLoginActivity" />
-        <activity android:name=".Courses.ModuleActivity"
-            android:parentActivityName=".Courses.CourseDetailActivity"></activity>
+            android:parentActivityName=".login.CorperLoginActivity" />
+        <activity
+            android:name=".courses.ModuleActivity"
+            android:parentActivityName=".courses.CourseDetailActivity" />
+        <activity
+            android:name=".courses.TopicActivity"
+            android:label="Topics"
+            android:parentActivityName=".courses.ModuleActivity" />
+        <activity
+            android:name=".courses.MyCourses"
+            android:label="My Courses"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".TopicContent"
+            android:label="Topic Content"
+            android:parentActivityName=".courses.ModuleActivity" />
+        <activity
+            android:name=".login.OthersLoginActivity"
+            android:label="@string/title_activity_others_login"
+            android:parentActivityName=".StarterActivity"/>
     </application>
 
 </manifest>

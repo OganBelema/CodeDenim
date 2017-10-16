@@ -2,9 +2,9 @@ package com.example.ogan.codedenim;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,9 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.ogan.codedenim.Courses.CourseActivity;
-import com.example.ogan.codedenim.Login.CorperLoginActivity;
-import com.example.ogan.codedenim.SessionManagement.UserSessionManager;
+import com.example.ogan.codedenim.courses.CourseActivity;
+import com.example.ogan.codedenim.courses.MyCourses;
+import com.example.ogan.codedenim.sessionManagement.UserSessionManager;
 
 import java.util.HashMap;
 
@@ -119,8 +119,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_myAccount) {
-            Intent intent = new Intent(getApplicationContext(), CorperLoginActivity.class);
-            startActivity(intent);
+
         } else if (id == R.id.nav_courses) {
             Intent intent = new Intent(getApplicationContext(), CourseActivity.class);
             startActivity(intent);
@@ -129,6 +128,9 @@ public class MainActivity extends AppCompatActivity
             // and redirect user to LoginActivity
             session.logoutUser();
             finish();
+        } else if (id == R.id.nav_myCourses) {
+            Intent intent = new Intent(getApplicationContext(), MyCourses.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
