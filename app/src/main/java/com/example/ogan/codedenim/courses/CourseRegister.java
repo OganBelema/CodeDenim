@@ -1,4 +1,4 @@
-package com.example.ogan.codedenim.Courses;
+package com.example.ogan.codedenim.courses;
 
 /**
  * Created by belema on 9/8/17.
