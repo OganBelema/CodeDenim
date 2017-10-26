@@ -2,6 +2,8 @@ package com.example.ogan.codedenim.courses;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +13,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.ogan.codedenim.adapters.CourseAdapter;
-import com.example.ogan.codedenim.gson.Categories.GetCourseByCategory;
-import com.example.ogan.codedenim.gson.Courses.CourseApus;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
+import com.example.ogan.codedenim.adapters.CourseAdapter;
+import com.example.ogan.codedenim.gson.Course;
 
 import java.util.ArrayList;
 
@@ -27,11 +28,10 @@ public class CoursesByCategories extends AppCompatActivity {
 
 
     int categoryId;
-    GetCourseByCategory getCourses;
     RecyclerView recyclerView;
     CourseAdapter coursesByCategoriesAdapter;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<CourseApus> results;
+    ArrayList<Course> results;
     ProgressBar progressBar;
 
 
@@ -40,29 +40,28 @@ public class CoursesByCategories extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_recyclerview_layout);
 
-        recyclerView = (RecyclerView) findViewById(R.id.general_recyclerView);
-        progressBar = (ProgressBar) findViewById(R.id.general_pr);
+        recyclerView = findViewById(R.id.general_recyclerView);
+        progressBar = findViewById(R.id.general_pr);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
         Intent intent = getIntent();
         categoryId = intent.getIntExtra("CategoryId", 0);
-        String categoryName = intent.getStringExtra("categoryName");
-        getSupportActionBar().setTitle("Courses in " + categoryName);
+        String categoryName = intent.getStringExtra("CategoryName");
+
         if(getSupportActionBar() != null ){
+            getSupportActionBar().setTitle("Courses in " + categoryName);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        getCourses = ServiceGenerator.createService(GetCourseByCategory.class);
 
 
-        //GET courses
-        Call<ArrayList<CourseApus>> call = getCourses.getCourses(categoryId);
-        call.enqueue(new Callback<ArrayList<CourseApus>>() {
+        //GET apiMethods
+        ServiceGenerator.apiMethods.getCourses(categoryId).enqueue(new Callback<ArrayList<Course>>() {
             @Override
-            public void onResponse(Call<ArrayList<CourseApus>> call, Response<ArrayList<CourseApus>> response) {
-               // System.out.println(response.body().getCourses().get(0).toString());
+            public void onResponse(@NonNull Call<ArrayList<Course>> call, @Nullable Response<ArrayList<Course>> response) {
+               // System.out.println(response.body().apiMethods().get(0).toString());
                 System.out.println(response.message());
                 if(response.isSuccessful()){
 
@@ -76,7 +75,7 @@ public class CoursesByCategories extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<CourseApus>> call, Throwable t) {
+            public void onFailure(@NonNull Call<ArrayList<Course>> call, @Nullable Throwable t) {
 
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();

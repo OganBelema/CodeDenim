@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ogan.codedenim.courses.TopicActivity;
-import com.example.ogan.codedenim.gson.Module.Module;
 import com.example.ogan.codedenim.R;
+import com.example.ogan.codedenim.courses.TopicActivity;
+import com.example.ogan.codedenim.gson.Module;
 
 import java.util.ArrayList;
 
@@ -31,12 +31,10 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleVH> 
 
     @Override
     public ModuleAdapter.ModuleVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View v = inflater.inflate(R.layout.module_view, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        ModuleVH vh = new ModuleVH(v);
-        return vh;
+
+        return new ModuleVH(LayoutInflater.from(
+                parent.getContext()).inflate(R.layout.module_view, parent, false));
+
     }
 
 
@@ -50,7 +48,7 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleVH> 
         String moduleDescription = moduleResult.get(position).getModuleDescription();
         holder.moduleDescription.setText(moduleDescription);
 
-        String moduleEstimatedTime = moduleResult.get(position).getExpectedTime().toString();
+        String moduleEstimatedTime = String.valueOf(moduleResult.get(position).getExpectedTime());
         holder.moduleEstimatedTime.setText("Estimated Time: " + moduleEstimatedTime +" minutes");
 
         final int moduleId = moduleResult.get(position).getModuleId();

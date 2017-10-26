@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.ogan.codedenim.HomeFragment;
-import com.example.ogan.codedenim.MentorsFragment;
-import com.example.ogan.codedenim.PitchFragment;
-import com.example.ogan.codedenim.UpdateFragment;
+import com.example.ogan.codedenim.fragments.HomeFragment;
+import com.example.ogan.codedenim.fragments.MentorsFragment;
+import com.example.ogan.codedenim.fragments.PitchFragment;
+import com.example.ogan.codedenim.fragments.UpdateFragment;
 
 /**
  * Created by ogan on 8/13/17.

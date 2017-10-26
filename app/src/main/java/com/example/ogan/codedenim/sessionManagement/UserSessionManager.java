@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.example.ogan.codedenim.StarterActivity;
+import com.example.ogan.codedenim.login.LoginActivity;
 
 import java.util.HashMap;
 
@@ -67,7 +68,7 @@ public class UserSessionManager {
 		if(!this.isUserLoggedIn()){
 			
 			// user is not logged in redirect him to Login Activity
-			Intent i = new Intent(_context, StarterActivity.class);
+			Intent i = new Intent(_context, LoginActivity.class);
 			
 			// Closing all the Activities from stack
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

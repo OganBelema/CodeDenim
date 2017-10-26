@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.ogan.codedenim.PDFFragment;
-import com.example.ogan.codedenim.VideoFragment;
+import com.example.ogan.codedenim.fragments.PDFFragment;
+import com.example.ogan.codedenim.fragments.VideoFragment;
 
 /**
  * Created by belema on 9/12/17.

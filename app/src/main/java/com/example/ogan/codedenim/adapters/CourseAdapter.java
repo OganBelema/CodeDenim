@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.ogan.codedenim.courses.CourseDetailActivity;
-import com.example.ogan.codedenim.gson.Courses.CourseApus;
 import com.example.ogan.codedenim.R;
+import com.example.ogan.codedenim.courses.CourseDetailActivity;
+import com.example.ogan.codedenim.gson.Course;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ import java.util.ArrayList;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CoursesActivityHolder> {
     Context context;
-    private ArrayList<CourseApus> courses;
+    private ArrayList<Course> courses;
 
-    public CourseAdapter(ArrayList<CourseApus> courses){
+    public CourseAdapter(ArrayList<Course> courses){
 
         this.courses = courses;
     }
@@ -33,19 +33,15 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CoursesAct
 
     @Override
     public CoursesActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View v = inflater.inflate(R.layout.course_by_category, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        CoursesActivityHolder vh = new CoursesActivityHolder(v);
-        return vh;
+        return new CoursesActivityHolder(LayoutInflater.from(
+                parent.getContext()).inflate(R.layout.course_by_category, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(CoursesActivityHolder holder, final int position) {
+    public void onBindViewHolder(final CoursesActivityHolder holder, int position) {
 
-        final String courseName = courses.get(position).getCourseName();
-        final String courseDescription = courses.get(position).getCourseDescription();
+        final String courseName = courses.get(holder.getAdapterPosition()).getCourseName();
+        final String courseDescription = courses.get(holder.getAdapterPosition()).getCourseDescription();
 
         final String courseImageUrl = "https://codedenim.azurewebsites.net/MaterialUpload/" +courses.get(position).getFileLocation();
         holder.courses.setText(courseName);
@@ -55,17 +51,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CoursesAct
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String courseImageUrl = "https://codedenim.azurewebsites.net/MaterialUpload/" +courses.get(position).getFileLocation();
 
-                String courseCategory = courses.get(position).getCategoryName();
-                String courseCode = courses.get(position).getCourseCode();
-                int expectedTime = courses.get(position).getExpectedTime();
-                int courseId = courses.get(position).getCourseId();
+                String courseCode = courses.get(holder.getAdapterPosition()).getCourseCode();
+                int expectedTime = courses.get(holder.getAdapterPosition()).getExpectedTime();
+                int courseId = courses.get(holder.getAdapterPosition()).getCourseId();
 
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("courseName", courseName);
                 intent.putExtra("courseDescription", courseDescription);
-                intent.putExtra("courseCategory", courseCategory);
                 intent.putExtra("courseCode", courseCode);
                 intent.putExtra("expectedTime", expectedTime);
                 intent.putExtra("courseImageUrl", courseImageUrl);

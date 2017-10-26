@@ -31,8 +31,6 @@ public class CourseDetailActivity extends AppCompatActivity {
     private TextView courseCode;
     private TextView expectedTime;
 
-    CourseRegisterApi corperRegisterApi;
-
     UserSessionManager session;
 
     @Override
@@ -50,13 +48,13 @@ public class CourseDetailActivity extends AppCompatActivity {
         // get email
         final String email = user.get(UserSessionManager.KEY_EMAIL);
 
-        courseName = (TextView) findViewById(R.id.course_name);
-        courseDescription = (TextView) findViewById(R.id.course_description);
-        courseCategory = (TextView) findViewById(R.id.course_category);
-        courseCode = (TextView) findViewById(R.id.course_code);
-        expectedTime = (TextView) findViewById(R.id.course_expected_time);
-        Button button = (Button) findViewById(R.id.button_enroll);
-        ImageView imageView = (ImageView) findViewById(R.id.course_detail_img);
+        courseName = findViewById(R.id.course_name);
+        courseDescription = findViewById(R.id.course_description);
+        courseCategory = findViewById(R.id.course_category);
+        courseCode = findViewById(R.id.course_code);
+        expectedTime = findViewById(R.id.course_expected_time);
+        Button button = findViewById(R.id.button_enroll);
+        ImageView imageView = findViewById(R.id.course_detail_img);
 
         Intent intent = getIntent();
         final String courseName = intent.getStringExtra("courseName");
@@ -88,11 +86,8 @@ public class CourseDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setContentView(R.layout.progressbar);
 
-
-                corperRegisterApi = ServiceGenerator.createService(CourseRegisterApi.class);
-
-                Call<ResponseBody> register = corperRegisterApi.registerCorper(courseId, new CourseRegister(email, String.valueOf(courseId)));
-                register.enqueue(new Callback<ResponseBody>() {
+                ServiceGenerator.apiMethods.registerCorper(courseId, new CourseRegister(email, String.valueOf(courseId)))
+                        .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         System.out.println(response.message());
@@ -114,11 +109,8 @@ public class CourseDetailActivity extends AppCompatActivity {
 
                     }
                 });
-
-
             }
         });
-
     }
 
     @Override

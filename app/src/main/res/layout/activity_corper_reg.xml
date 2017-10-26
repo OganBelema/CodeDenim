@@ -8,11 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ogan.codedenim.register.CorperReg">
+    tools:context="com.example.ogan.codedenim.register.CorperRegisterActivity">
 
     <!-- Login progress -->
+
     <ProgressBar
-        android:id="@+id/corper_register_progress"
+        android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,11 +76,11 @@
             <!-- Gender drop-down spinner -->
             <Spinner
                 android:id="@+id/spinner_gender"
-                android:padding="16dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:spinnerMode="dropdown"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:spinnerMode="dropdown" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -105,19 +106,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Mobile Number"
-                    android:maxLines="1"
                     android:inputType="number"
+                    android:maxLines="1"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Spinner
                 android:id="@+id/nysc_state"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                style="@style/Widget.AppCompat.Spinner.Underlined"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -170,8 +171,8 @@
                     android:id="@+id/corper_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
                     android:hint="Password"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -197,15 +198,16 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/mybutton"
-                android:textColor="@android:color/white"
                 android:text="@string/action_register"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
     </ScrollView>
+
 </LinearLayout>

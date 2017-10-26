@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.ogan.codedenim.courses.CourseActivity;
 import com.example.ogan.codedenim.courses.MyCourses;
+import com.example.ogan.codedenim.fragments.TabFragment;
 import com.example.ogan.codedenim.sessionManagement.UserSessionManager;
 
 import java.util.HashMap;
@@ -45,9 +46,9 @@ public class MainActivity extends AppCompatActivity
         // get email
         String email = user.get(UserSessionManager.KEY_EMAIL);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView textView = (TextView) headerView.findViewById(R.id.drawNav_txt);
+        TextView textView = headerView.findViewById(R.id.drawNav_txt);
         textView.setText(email);
 
          // Check user login
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

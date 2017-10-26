@@ -11,11 +11,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.ogan.codedenim.adapters.TopicAdapter;
-import com.example.ogan.codedenim.gson.Module.GetTopic;
-import com.example.ogan.codedenim.gson.Module.Topic;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
+import com.example.ogan.codedenim.adapters.TopicAdapter;
+import com.example.ogan.codedenim.gson.Topic;
 
 import java.util.ArrayList;
 
@@ -26,7 +25,6 @@ import retrofit2.Response;
 public class TopicActivity extends AppCompatActivity {
 
     TopicAdapter topicAdapter;
-    GetTopic getModule;
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Topic> results;
@@ -37,20 +35,17 @@ public class TopicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.general_recyclerview_layout);
 
-        recyclerView = (RecyclerView) findViewById(R.id.general_recyclerView);
-        progressBar = (ProgressBar) findViewById(R.id.general_pr);
+        recyclerView = findViewById(R.id.general_recyclerView);
+        progressBar = findViewById(R.id.general_pr);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         Intent intent = getIntent();
         int moduleId = intent.getIntExtra("moduleId", 0);
 
-        getModule = ServiceGenerator.createService(GetTopic.class);
-
 
         //GET modules
-        Call<ArrayList<Topic>> call = getModule.getTopicList(moduleId);
-        call.enqueue(new Callback<ArrayList<Topic>>() {
+        ServiceGenerator.apiMethods.getTopicList(moduleId).enqueue(new Callback<ArrayList<Topic>>() {
             @Override
             public void onResponse(Call<ArrayList<Topic>> call, Response<ArrayList<Topic>> response) {
 

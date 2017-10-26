@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.ogan.codedenim"
         minSdkVersion 16
@@ -33,8 +34,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
-    compile 'com.github.barteksc:android-pdf-viewer:2.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
     compile 'com.google.android.exoplayer:exoplayer:r2.5.2'
     testCompile 'junit:junit:4.12'
 }

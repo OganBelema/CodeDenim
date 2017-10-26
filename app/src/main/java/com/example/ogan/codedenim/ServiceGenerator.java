@@ -1,8 +1,7 @@
 package com.example.ogan.codedenim;
 
-import java.util.concurrent.TimeUnit;
+import com.example.ogan.codedenim.gson.ApiMethods;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,14 +13,6 @@ public class ServiceGenerator {
 
     private static final String BASE_URL = "https://codedenim.azurewebsites.net/";
 
-    OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-            .connectTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .build();
-
-    private static OkHttpClient.Builder httpClient =
-            new OkHttpClient.Builder();
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
@@ -30,10 +21,15 @@ public class ServiceGenerator {
 
     private static Retrofit retrofit = builder.build();
 
+    public static ApiMethods apiMethods = retrofit.create(ApiMethods.class);
+
+    /*public ApiMethods getApiMethods(){
+        return apiMethods;
+    }
 
     public static <S> S createService(
             Class<S> serviceClass) {
         return retrofit.create(serviceClass);
-    }
+    } */
 }
 

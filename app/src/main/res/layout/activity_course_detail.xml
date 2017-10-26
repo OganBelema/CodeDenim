@@ -60,6 +60,6 @@
             android:layout_marginTop="20dp"
             android:textColor="@android:color/white"
             android:background="@drawable/mybutton"
-            android:text="Enroll" />
+            android:text="Start" />
     </LinearLayout>
 </ScrollView>

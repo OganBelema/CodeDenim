@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.ogan.codedenim.gson.Module.Topic;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.TopicContent;
+import com.example.ogan.codedenim.gson.Topic;
 
 import java.util.ArrayList;
 
@@ -32,19 +32,17 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicVH>{
 
     @Override
     public TopicVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View v = inflater.inflate(R.layout.course_by_category, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        TopicVH vh = new TopicVH(v);
-        return vh;
+
+        return new TopicVH(LayoutInflater.from(
+                parent.getContext()).inflate(R.layout.course_by_category, parent, false));
+
     }
 
     @Override
     public void onBindViewHolder(TopicVH holder, final int position) {
 
         final String topicName = topics.get(position).getTopicName();
-        final String expectedTime = topics.get(position).getExpectedTime().toString();
+        final String expectedTime = String.valueOf(topics.get(position).getExpectedTime());
         holder.courses.setText("Topic Name: " + topicName);
         holder.courseDescription.setText("Expected Time: " + expectedTime + " minutes");
 
