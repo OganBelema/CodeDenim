@@ -28,6 +28,39 @@ public class TabFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tab, container, false);
         getActivity().setTitle("Home");
         ViewPager viewPager = v.findViewById(R.id.viewpager);
+
+        //to change the title of the activity when a tab is selected
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+                switch (position){
+                    case 0:
+                        getActivity().setTitle("Home");
+                        break;
+                    case 1:
+                        getActivity().setTitle("News");
+                        break;
+                    case 2:
+                        getActivity().setTitle("Leads");
+                        break;
+                    case 3:
+                        getActivity().setTitle("Pitch");
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         TabAdapter myAdpter = new TabAdapter(getChildFragmentManager());
         viewPager.setAdapter(myAdpter);
 

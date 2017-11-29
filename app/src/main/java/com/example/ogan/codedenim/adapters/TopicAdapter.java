@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicVH>{
 
-    Context context;
+    private Context context;
     private ArrayList<Topic> topics;
 
     public TopicAdapter(ArrayList<Topic> topics){
@@ -43,13 +43,16 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicVH>{
 
         final String topicName = topics.get(position).getTopicName();
         final String expectedTime = String.valueOf(topics.get(position).getExpectedTime());
+        final int topicId = topics.get(position).getTopicId();
         holder.courses.setText("Topic Name: " + topicName);
         holder.courseDescription.setText("Expected Time: " + expectedTime + " minutes");
+        System.out.println(topicId);
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, TopicContent.class);
+                intent.putExtra("topicId", topicId);
                 context.startActivity(intent);
             }
         });
@@ -61,18 +64,18 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicVH>{
     }
 
 
-    public class TopicVH extends RecyclerView.ViewHolder{
+    class TopicVH extends RecyclerView.ViewHolder{
 
         private TextView courses;
         private TextView courseDescription;
         private LinearLayout linearLayout;
 
-        public TopicVH(View view){
+        private TopicVH(View view){
             super(view);
             context = view.getContext();
-            courses = (TextView) view.findViewById(R.id.courses_txt);
-            courseDescription = (TextView) view.findViewById(R.id.courses_description_txt);
-            linearLayout = (LinearLayout) view.findViewById(R.id.course_linear_layout);
+            courses = view.findViewById(R.id.courses_txt);
+            courseDescription = view.findViewById(R.id.courses_description_txt);
+            linearLayout = view.findViewById(R.id.course_linear_layout);
         }
     }
 }

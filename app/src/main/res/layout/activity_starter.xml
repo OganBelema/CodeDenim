@@ -7,9 +7,11 @@
     tools:context="com.example.ogan.codedenim.StarterActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/startpic"/>
+        android:id="@+id/starter_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/rsz_codedenim_logo"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -19,44 +21,6 @@
         android:textColor="@color/colorPrimary"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
-
-    <!--<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:id="@+id/button_corper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            android:text="Corper"/>
-
-        <Button
-            android:id="@+id/button_student"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            android:layout_marginTop="20dp"
-            android:text="Student" />
-
-        <Button
-            android:id="@+id/others_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
-            android:layout_marginTop="20dp"
-            android:text="Others"/>
-
-    </LinearLayout>-->
 
 
 </RelativeLayout>

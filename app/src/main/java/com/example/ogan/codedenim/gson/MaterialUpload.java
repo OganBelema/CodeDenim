@@ -9,6 +9,7 @@ public class MaterialUpload {
     private String Name;
     private String Description;
     private String FileLocation;
+    private String FileType;
 
     public int getTopicMaterialUploadId() {
         return TopicMaterialUploadId;
@@ -32,5 +33,9 @@ public class MaterialUpload {
 
     public String getFileLocation() {
         return FileLocation;
+    }
+
+    public String getFileType() {
+        return FileType;
     }
 }

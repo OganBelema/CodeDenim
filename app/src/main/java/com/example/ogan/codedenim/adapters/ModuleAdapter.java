@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleVH> {
 
-    Context context;
+    private Context context;
     private ArrayList<Module> moduleResult;
 
     public ModuleAdapter(ArrayList<Module> myDataset) {
@@ -36,7 +36,6 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleVH> 
                 parent.getContext()).inflate(R.layout.module_view, parent, false));
 
     }
-
 
 
     @Override
@@ -74,23 +73,20 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleVH> 
 
     //View Holders
 
-    public class ModuleVH extends RecyclerView.ViewHolder{
+    class ModuleVH extends RecyclerView.ViewHolder{
 
         TextView moduleName;
         TextView moduleDescription;
         TextView moduleEstimatedTime;
         CardView cardView;
 
-
-
-
-        public ModuleVH(View view){
+         ModuleVH(View view){
             super(view);
             context = view.getContext();
-            cardView = (CardView) view.findViewById(R.id.module_card);
-            moduleName = (TextView) view.findViewById(R.id.moduleName_txt);
-            moduleDescription = (TextView) view.findViewById(R.id.moduleDescription_txt);
-            moduleEstimatedTime = (TextView) view.findViewById(R.id.moduleEstimatedTime_txt);
+            cardView = view.findViewById(R.id.module_card);
+            moduleName = view.findViewById(R.id.moduleName_txt);
+            moduleDescription = view.findViewById(R.id.moduleDescription_txt);
+            moduleEstimatedTime = view.findViewById(R.id.moduleEstimatedTime_txt);
 
         }
     }

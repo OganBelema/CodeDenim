@@ -20,17 +20,38 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_student_login">Student Sign in</string>
+
+    <string name="title_activity_student_login">Student Register</string>
     <string name="title_activity_corper_reg">Corper Register</string>
     <string name="title_activity_others_login">Sign in</string>
     <string name="title_activity_user_category">UserCategory</string>
+    <string name="title_activity_myAccount">My Account</string>
 
     <string name="money">₦%s</string>
     <string name="learning_path_name">Name: %s</string>
     <string name="learning_path_price">Price: ₦%s</string>
     <string name="learning_path_desc">Description: %s</string>
     <string name="title_activity_login2">Sign in</string>
+
+    <string name="corper">Corper</string>
+    <string name="enroll">Enroll</string>
+
+    <string name="user_detail_email"><b>Email</b>: %s</string>
+    <string name="user_detail_name"><b>Name</b>: %s</string>
+    <string name="video_content">Video Content</string>
+    <string name="audio_content">Audio Content</string>
+    <string name="pdf_content">PDF Content</string>
+
+    <string name="pay">Pay</string>
+    <string name="cancel">Cancel</string>
+
+    <!--card details-->
+    <string name="payee_email">Email Address</string>
+    <string name="card_name">Card Name</string>
+    <string name="amount">Amount</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_cvc">Card CVC</string>
+    <string name="card_expiry_date">Card Expiry Date: </string>
+    <string name="card_month">MM</string>
+    <string name="card_year">YY</string>
 </resources>

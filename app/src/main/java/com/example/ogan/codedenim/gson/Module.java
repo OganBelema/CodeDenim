@@ -33,7 +33,7 @@ public class Module {
         return ExpectedTime;
     }
 
-    public com.example.ogan.codedenim.gson.Course getCourse() {
+    public Course getCourse() {
         return Course;
     }
 

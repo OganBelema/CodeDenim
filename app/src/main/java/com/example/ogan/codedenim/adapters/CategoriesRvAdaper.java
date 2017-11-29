@@ -14,14 +14,11 @@ import com.example.ogan.codedenim.LearningPathDetailActivity;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.gson.LearningPath;
 import com.squareup.picasso.Picasso;
+import com.example.ogan.codedenim.adapters.CategoriesRvAdaper.CategoriesVH;
 
 import java.util.ArrayList;
 
-/**
- * Created by ogan on 8/26/17.
- */
-
-public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesRvAdaper.CategoriesVH> {
+public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesVH> {
 
     private Context context;
     private ArrayList<LearningPath> categoryResult;
@@ -32,9 +29,10 @@ public class CategoriesRvAdaper extends RecyclerView.Adapter<CategoriesRvAdaper.
     }
 
     @Override
-    public CategoriesRvAdaper.CategoriesVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CategoriesVH(LayoutInflater.from(
-                parent.getContext()).inflate(R.layout.my_categories_view, parent, false));
+    public CategoriesVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new CategoriesVH(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.my_categories_view, parent, false));
     }
 
 

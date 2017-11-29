@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CoursesActivityHolder> {
-    Context context;
+    private Context context;
     private ArrayList<Course> courses;
 
     public CourseAdapter(ArrayList<Course> courses){
@@ -82,12 +82,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CoursesAct
         private LinearLayout linearLayout;
         private ImageView courseImage;
 
-        public CoursesActivityHolder(View view){
+        CoursesActivityHolder(View view){
             super(view);
             context = view.getContext();
-            courses = (TextView) view.findViewById(R.id.courses_txt);
-            courseDescription = (TextView) view.findViewById(R.id.courses_description_txt);
-            linearLayout = (LinearLayout) view.findViewById(R.id.course_linear_layout);
+            courses = view.findViewById(R.id.courses_txt);
+            courseDescription = view.findViewById(R.id.courses_description_txt);
+            linearLayout = view.findViewById(R.id.course_linear_layout);
             courseImage = view.findViewById(R.id.course_image);
         }
     }

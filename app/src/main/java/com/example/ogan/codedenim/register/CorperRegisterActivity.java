@@ -3,9 +3,10 @@ package com.example.ogan.codedenim.register;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,14 +18,15 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.ogan.codedenim.user.Corper;
+import com.example.ogan.codedenim.NetworkConnectivity;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
-
-import java.io.IOException;
+import com.example.ogan.codedenim.login.LoginActivity;
+import com.example.ogan.codedenim.user.Corper;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -32,10 +34,6 @@ import retrofit2.Response;
  */
 public class CorperRegisterActivity extends AppCompatActivity {
 
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private View mProgressView;
@@ -71,17 +69,21 @@ public class CorperRegisterActivity extends AppCompatActivity {
         mCorperGender = findViewById(R.id.spinner_gender);
         mDateOfBirth = findViewById(R.id.date_of_birth);
         mCorperNumber = findViewById(R.id.mobile_number);
-        mNyscState =  findViewById(R.id.nysc_state);
+        mNyscState = findViewById(R.id.nysc_state);
         mCorperInstitution = findViewById(R.id.corper_institution);
         mCorperDiscipline = findViewById(R.id.corper_discipline);
         mCorperPassword = findViewById(R.id.corper_password);
         mCorperConfirmPassword = findViewById(R.id.corper_confirm_password);
 
-        Button mEmailSignInButton = findViewById(R.id.corper_register_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button registerButton = findViewById(R.id.corper_register_button);
+        registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                if(NetworkConnectivity.INSTANCE.checkNetworkConnecttion(getApplicationContext())){
+                    attemptRegister();
+                } else {
+                    NetworkConnectivity.INSTANCE.showNoInternetMessage(CorperRegisterActivity.this);
+                }
             }
         });
 
@@ -152,10 +154,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+    private void attemptRegister() {
 
         // Reset errors.
         mCorperEmail.setError(null);
@@ -173,7 +172,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
         String email = mCorperEmail.getText().toString().trim();
         String password = mCorperPassword.getText().toString().trim();
         String callUpNumber = mCallUpNumber.getText().toString().trim();
-        String corperFirstName= mCorperFirstName.getText().toString().trim();
+        String corperFirstName = mCorperFirstName.getText().toString().trim();
         String corperLastName = mCorperLastName.getText().toString().trim();
         String dateOfBirth = mDateOfBirth.getText().toString().trim();
         String corperNumber = mCorperNumber.getText().toString().trim();
@@ -189,7 +188,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
             mCorperPassword.setError(getString(R.string.error_field_required));
             focusView = mCorperPassword;
             cancel = true;
-        } else if(!isPasswordValid(password)){
+        } else if (!isPasswordValid(password)) {
             mCorperPassword.setError(getString(R.string.error_invalid_password));
             focusView = mCorperPassword;
             cancel = true;
@@ -198,7 +197,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
 
         // Check for a empty confirm password or if is the same with password
         if (TextUtils.isEmpty(corperConfirmPassword) || !corperConfirmPassword.equals(password)) {
-            mCorperPassword.setError(getString(R.string.error_incorrect_password));
+            mCorperConfirmPassword.setError(getString(R.string.error_incorrect_password));
             focusView = mCorperConfirmPassword;
             cancel = true;
         }
@@ -262,7 +261,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
         }
 
 
-            //check for empty corper institution
+        //check for empty corper institution
         if (TextUtils.isEmpty(corperInstitution)) {
             mCorperInstitution.setError(getString(R.string.error_field_required));
             focusView = mCorperInstitution;
@@ -291,16 +290,34 @@ public class CorperRegisterActivity extends AppCompatActivity {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-                mAuthTask = new UserLoginTask(callUpNumber, corperFirstName, corperLastName,
-                        corperGender, dateOfBirth, corperNumber,
-                        nyscState, corperInstitution, corperDiscipline,
-                        email, password, corperConfirmPassword);
-                mAuthTask.execute((Void) null);
+
+            Call<ResponseBody> register = ServiceGenerator.INSTANCE.getApiMethods().registerCorper(new Corper(callUpNumber,
+                    corperFirstName, corperLastName, corperGender, dateOfBirth, corperNumber,
+                    nyscState, corperInstitution, corperDiscipline, email, password, corperConfirmPassword));
+
+            register.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
+
+                    showProgress(false);
+                    if (response != null) {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    showProgress(false);
+                }
+            });
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
         return email.contains("@");
     }
 
@@ -323,131 +340,25 @@ public class CorperRegisterActivity extends AppCompatActivity {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
-
-
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-        private final String mCallUpNumber;
-        private final String mCorperFirstName;
-        private final String mCorperLastName;
-        private final String mCorperGender;
-        private final String mDateOfBirth;
-        private final String mCorperNumber;
-        private final String mNyscState;
-        private final String mCorperInstitution;
-        private final String mCorperDiscipline;
-        private final String mCorperConfirmPassword;
-
-        UserLoginTask(String mCallUpNumber, String mCorperFirstName, String mCorperLastName,
-                      String mCorperGender, String mDateOfBirth, String mCorperNumber,
-                      String mNyscState, String mCorperInstitution, String mCorperDiscipline,
-                      String email, String password, String mCorperConfirmPassword) {
-            mEmail = email;
-            mPassword = password;
-            this.mCallUpNumber = mCallUpNumber;
-            this.mCorperFirstName = mCorperFirstName;
-            this.mCorperLastName = mCorperLastName;
-            this.mCorperGender = mCorperGender;
-            this.mDateOfBirth = mDateOfBirth;
-            this.mCorperNumber = mCorperNumber;
-            this.mNyscState = mNyscState;
-            this.mCorperInstitution = mCorperInstitution;
-            this.mCorperDiscipline = mCorperDiscipline;
-            this.mCorperConfirmPassword = mCorperConfirmPassword;
-
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            Call<ResponseBody> register = ServiceGenerator.apiMethods.registerCorper(new Corper(mCallUpNumber,
-                    mCorperFirstName,mCorperLastName,mCorperGender,mDateOfBirth,mCorperNumber,
-                    mNyscState,mCorperInstitution,mCorperDiscipline,mEmail,mPassword,mCorperConfirmPassword));
-
-            try{
-                Response<ResponseBody> response = register.execute();
-                if (response.isSuccessful()) {
-
-                    try {
-                        // get String from response
-                        String stringResponse = response.body().string();
-                        System.out.println(response.message());
-                        System.out.println("headers: " + response.headers());
-                        System.out.println("raw: " + response.raw());
-                        System.out.println(stringResponse);
-                        //finish();
-                        return true;
-                        // Do whatever you want with the String
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-
-                    System.out.println(response.message());
-                    System.out.println("headers: " + response.headers());
-                    System.out.println("raw: " + response.raw());
-
-                }
-            } catch (IOException e){
-                e.printStackTrace();
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             }
+        });
 
-
-            // TODO: register the new account here.
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(getApplicationContext(), "Error registering", Toast.LENGTH_SHORT).show();
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
+        });
     }
 }
 

@@ -11,8 +11,8 @@ public class User {
     private String DateOfBirth;
     private String MobileNumber;
     private String Email;
-    private String password;
-    private String confirmPassword;
+    private String Password;
+    private String ConfirmPassword;
 
     public User(String firstName, String lastName, String gender, String dateOfBirth,
                 String mobileNumber, String email, String password, String confirmPassword) {
@@ -22,7 +22,7 @@ public class User {
         DateOfBirth = dateOfBirth;
         MobileNumber = mobileNumber;
         Email = email;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
+        this.Password = password;
+        this.ConfirmPassword = confirmPassword;
     }
 }

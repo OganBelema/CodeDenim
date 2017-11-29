@@ -13,15 +13,15 @@
         <item
             android:id="@+id/nav_courses"
             android:icon="@drawable/ic_library_books_black_24dp"
-            android:title="Courses" />
-        <item
+            android:title="Categories" />
+        <!--<item
             android:id="@+id/nav_joinCompetition"
             android:title="Join Competition"
             android:icon="@drawable/ic_grade_black_24dp"/>
         <item
             android:id="@+id/nav_setting"
             android:icon="@mipmap/ic_settings_black_24dp"
-            android:title="Settings"/>
+            android:title="Settings"/>-->
         <item
             android:id="@+id/nav_aboutUs"
             android:icon="@drawable/ic_info_black_24dp"
@@ -34,8 +34,7 @@
 
     <item android:title="Socials">
         <menu>
-            <group android:id="@+id/soc_group"
-                android:checkableBehavior="single">
+            <group android:id="@+id/soc_group">
                 <item android:id="@+id/nav_twitter"
                     android:icon="@mipmap/ic_twitter_box_black_24dp"
                     android:title="Twitter"/>

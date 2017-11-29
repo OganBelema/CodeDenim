@@ -2,6 +2,9 @@ package com.example.ogan.codedenim.courses;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ogan.codedenim.ForumActivity;
+import com.example.ogan.codedenim.NetworkConnectivity;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
 import com.example.ogan.codedenim.sessionManagement.UserSessionManager;
@@ -25,13 +30,9 @@ import retrofit2.Response;
 
 public class CourseDetailActivity extends AppCompatActivity {
 
-    private TextView courseName;
-    private TextView courseDescription;
-    private TextView courseCategory;
-    private TextView courseCode;
-    private TextView expectedTime;
-
-    UserSessionManager session;
+    private String courseName;
+    private int courseId;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,80 +40,96 @@ public class CourseDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course_detail);
         setTitle("Course Detail");
 
-        // Session class instance
-        session = new UserSessionManager(getApplicationContext());
-
         // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
+        HashMap<String, String> user = UserSessionManager.getUserDetails();
 
         // get email
-        final String email = user.get(UserSessionManager.KEY_EMAIL);
+        email = user.get(UserSessionManager.KEY_EMAIL);
 
-        courseName = findViewById(R.id.course_name);
-        courseDescription = findViewById(R.id.course_description);
-        courseCategory = findViewById(R.id.course_category);
-        courseCode = findViewById(R.id.course_code);
-        expectedTime = findViewById(R.id.course_expected_time);
+        TextView mCourseName = findViewById(R.id.course_name);
+        TextView mCourseDescription= findViewById(R.id.course_description);
+        TextView mCourseCategory = findViewById(R.id.course_category);
+        TextView mCourseCode = findViewById(R.id.course_code);
+        TextView mExpectedTime = findViewById(R.id.course_expected_time);
         Button button = findViewById(R.id.button_enroll);
         ImageView imageView = findViewById(R.id.course_detail_img);
 
         Intent intent = getIntent();
-        final String courseName = intent.getStringExtra("courseName");
+        courseName = intent.getStringExtra("courseName");
         String courseDescription = intent.getStringExtra("courseDescription");
         String courseCategory = intent.getStringExtra("courseCategory");
         String courseCode = intent.getStringExtra("courseCode");
         int expectedTime = intent.getIntExtra("expectedTime",0);
         String courseImageUrl = intent.getStringExtra("courseImageUrl");
-        final int courseId = intent.getIntExtra("courseId", 0);
+        courseId = intent.getIntExtra("courseId", 0);
 
 
 
         Picasso.with(getApplicationContext()).load(courseImageUrl).into(imageView);
 
         if(courseCategory == null){
-            this.courseCategory.setVisibility(View.GONE);
+            mCourseCategory.setVisibility(View.GONE);
         } else {
-            this.courseCategory.setText("Course Category: " + courseCategory);
+            mCourseCategory.setText("Course Category: " + courseCategory);
         }
 
 
-        this.courseName.setText("Course Name: " + courseName);
-        this.courseDescription.setText("Course Description: " + courseDescription);
-        this.courseCode.setText("Course Code: " + courseCode);
-        this.expectedTime.setText(String.valueOf("Course Length: " + expectedTime));
+        mCourseName.setText("Course Name: " + courseName);
+        mCourseDescription.setText("Course Description: " + courseDescription);
+        mCourseCode.setText("Course Code: " + courseCode);
+        mExpectedTime.setText(String.valueOf("Course Length: " + expectedTime));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.progressbar);
+                if (NetworkConnectivity.INSTANCE.checkNetworkConnecttion(getApplicationContext())) {
+                    getData();
+                } else {
 
-                ServiceGenerator.apiMethods.registerCorper(courseId, new CourseRegister(email, String.valueOf(courseId)))
-                        .enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        System.out.println(response.message());
-                        if(response.isSuccessful()){
-                            Intent intent = new Intent(getApplicationContext(), ModuleActivity.class);
-                            intent.putExtra("courseId", courseId);
-                            intent.putExtra("courseName", courseName);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }
+                    NetworkConnectivity.INSTANCE.showNoInternetMessage(CourseDetailActivity.this);
+                }
+            }
+        });
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                        setContentView(R.layout.activity_course_detail);
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("error", t.getMessage());
-
-                    }
-                });
+        //forum button setup
+        FloatingActionButton forumBtn = findViewById(R.id.forum_btn);
+        forumBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ForumActivity.class);
+                startActivity(intent);
             }
         });
     }
 
+    private void getData(){
+        ServiceGenerator.INSTANCE.getApiMethods().registerCorper(courseId, new CourseRegister(email, String.valueOf(courseId)))
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
+                        if (response != null) {
+                            System.out.println(response.message());
+                            if (response.isSuccessful()) {
+                                Intent intent = new Intent(getApplicationContext(), ModuleActivity.class);
+                                intent.putExtra("courseId", courseId);
+                                intent.putExtra("courseName", courseName);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @Nullable Throwable t) {
+
+                        //setContentView(R.layout.activity_course_detail);
+                        if (t != null) {
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("error", t.getMessage());
+                        }
+                    }
+                });
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
