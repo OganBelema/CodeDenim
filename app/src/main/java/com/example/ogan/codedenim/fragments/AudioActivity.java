@@ -11,8 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 
+import com.example.ogan.codedenim.MyUtilClass;
 import com.example.ogan.codedenim.R;
 
 import java.io.IOException;
@@ -25,6 +28,10 @@ public class AudioActivity extends AppCompatActivity {
     private AudioManager audioManager;
     private String url;
     private SeekBar seekBar;
+    private Handler handler;
+    private Runnable runnable;
+    private ProgressBar progressBar;
+    private LinearLayout linearLayout;
 
     private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener =
             new AudioManager.OnAudioFocusChangeListener(){
@@ -33,11 +40,12 @@ public class AudioActivity extends AppCompatActivity {
                     if(focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT ||
                             focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK){
                         mediaPlayer.pause();
-                        mediaPlayer.seekTo(0);
+                        //mediaPlayer.seekTo(0);
                     } else if(focusChange == AudioManager.AUDIOFOCUS_GAIN){
                         mediaPlayer.start();
                     } else if(focusChange == AudioManager.AUDIOFOCUS_LOSS){
-                        releaseMediaPlayer();
+                        //releaseMediaPlayer();
+                        mediaPlayer.pause();
                     }
                 }
             };
@@ -47,60 +55,33 @@ public class AudioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_audio);
 
-        String name = getIntent().getStringExtra("name");
-        setTitle(name);
-        url = "https://codedenim.azurewebsites.net/MaterialUpload/" + getIntent().getStringExtra("fileLocation");
-
+        //String name = getIntent().getStringExtra("name");
+        String fileLocation = getIntent().getStringExtra("fileLocation");
+        setTitle(fileLocation);
+        url = "https://codedenim.azurewebsites.net/MaterialUpload/" + fileLocation;
+        System.out.println(url);
         //requesting audio focus
         audioManager = (AudioManager) getApplicationContext()
                 .getSystemService(Context.AUDIO_SERVICE);
+
+        handler = new Handler();
 
 
         CircleButton playBtn = findViewById(R.id.play_button);
         CircleButton pauseBtn = findViewById(R.id.pause_button);
         seekBar = findViewById(R.id.seekBar);
-
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (mediaPlayer != null && b){
-                    mediaPlayer.seekTo(i * 1000);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        final Handler mHandler = new Handler();
-        //Make sure you update Seekbar on UI thread
-        AudioActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(mediaPlayer != null){
-                    int mCurrentPosition = mediaPlayer.getCurrentPosition() / 1000;
-                    seekBar.setProgress(mCurrentPosition);
-                }
-                mHandler.postDelayed(this, 1000);
-            }
-        });
-
-
+        progressBar = findViewById(R.id.audio_progress_bar);
+        linearLayout = findViewById(R.id.audio_container_view);
 
         playBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mediaPlayer == null){
+                    loadMedia();
                     setupMedia();
                 } else {
                     mediaPlayer.start();
+                    playCycle();
                 }
 
             }
@@ -114,6 +95,44 @@ public class AudioActivity extends AppCompatActivity {
                 }
             }
         });
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean input) {
+                if (input){
+                    try{
+                        mediaPlayer.seekTo(progress);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void playCycle(){
+        if (mediaPlayer != null) {
+            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+            if (mediaPlayer.isPlaying()) {
+                runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        playCycle();
+                    }
+                };
+                handler.postDelayed(runnable, 1000);
+            }
+        }
     }
 
     private void releaseMediaPlayer(){
@@ -121,8 +140,17 @@ public class AudioActivity extends AppCompatActivity {
             mediaPlayer.release();
             mediaPlayer = null;
             audioManager.abandonAudioFocus(audioFocusChangeListener);
+            handler.removeCallbacks(runnable);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null)
+        mediaPlayer.pause();
+    }
+
 
     @Override
     public void onStop() {
@@ -137,6 +165,7 @@ public class AudioActivity extends AppCompatActivity {
             if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED){
                 //Proceed with playing
                 mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 try {
                     mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(url));
                 } catch (IOException e){
@@ -146,13 +175,19 @@ public class AudioActivity extends AppCompatActivity {
                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
-
-                        mediaPlayer.start();
+                        doneLoading();
                         seekBar.setMax(mediaPlayer.getDuration());
-                        /*while (mediaPlayer.isPlaying()){
-                                int mCurrentPosition = mediaPlayer.getCurrentPosition() / 1000;
-                                seekBar.setProgress(mCurrentPosition);
-                        }*/
+                        mediaPlayer.start();
+                        playCycle();
+                    }
+                });
+
+                mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
+                        doneLoading();
+                        MyUtilClass.INSTANCE.showAlert(AudioActivity.this, "Sorry, an error occurred. Please try again.");
+                        return false;
                     }
                 });
 
@@ -166,6 +201,18 @@ public class AudioActivity extends AppCompatActivity {
         }
 
     }
+
+    private void loadMedia(){
+        linearLayout.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void doneLoading(){
+        progressBar.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.VISIBLE);
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
