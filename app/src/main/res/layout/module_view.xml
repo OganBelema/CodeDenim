@@ -28,13 +28,6 @@
             android:layout_gravity="bottom"/>
 
         <TextView
-            android:id="@+id/moduleDescription_txt"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"/>
-
-        <TextView
             android:id="@+id/moduleEstimatedTime_txt"
             android:textSize="20sp"
             android:layout_width="match_parent"

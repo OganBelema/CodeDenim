@@ -1,9 +1,6 @@
 package com.example.ogan.codedenim.register;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,14 +12,16 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ogan.codedenim.NetworkConnectivity;
+import com.example.ogan.codedenim.MyUtilClass;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
 import com.example.ogan.codedenim.login.LoginActivity;
-import com.example.ogan.codedenim.user.Corper;
+import com.example.ogan.codedenim.user.Corp;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -37,12 +36,13 @@ public class CorperRegisterActivity extends AppCompatActivity {
 
     // UI references.
     private View mProgressView;
-    private View mLoginFormView;
     private TextInputEditText mCallUpNumber;
     private TextInputEditText mCorperFirstName;
     private TextInputEditText mCorperLastName;
     private Spinner mCorperGender;
-    private TextInputEditText mDateOfBirth;
+    private EditText mDay;
+    private EditText mMonth;
+    private EditText mYear;
     private TextInputEditText mCorperNumber;
     private Spinner mNyscState;
     private TextInputEditText mCorperInstitution;
@@ -50,9 +50,10 @@ public class CorperRegisterActivity extends AppCompatActivity {
     private TextInputEditText mCorperEmail;
     private TextInputEditText mCorperPassword;
     private TextInputEditText mCorperConfirmPassword;
+    private Button registerButton;
 
-    String corperGender;
-    String nyscState;
+    private String corperGender;
+    private String nyscState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +62,13 @@ public class CorperRegisterActivity extends AppCompatActivity {
 
         // Set up the login form.
         mCorperEmail = findViewById(R.id.corper_email);
-
-
         mCallUpNumber = findViewById(R.id.call_up_number);
         mCorperFirstName = findViewById(R.id.first_name);
         mCorperLastName = findViewById(R.id.last_name);
         mCorperGender = findViewById(R.id.spinner_gender);
-        mDateOfBirth = findViewById(R.id.date_of_birth);
+        mDay = findViewById(R.id.day_et);
+        mMonth = findViewById(R.id.month_et);
+        mYear = findViewById(R.id.year_et);
         mCorperNumber = findViewById(R.id.mobile_number);
         mNyscState = findViewById(R.id.nysc_state);
         mCorperInstitution = findViewById(R.id.corper_institution);
@@ -75,20 +76,30 @@ public class CorperRegisterActivity extends AppCompatActivity {
         mCorperPassword = findViewById(R.id.corper_password);
         mCorperConfirmPassword = findViewById(R.id.corper_confirm_password);
 
-        Button registerButton = findViewById(R.id.corper_register_button);
+        registerButton = findViewById(R.id.corper_register_button);
         registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(NetworkConnectivity.INSTANCE.checkNetworkConnecttion(getApplicationContext())){
+                if(MyUtilClass.INSTANCE.checkNetworkConnection(getApplicationContext())){
                     attemptRegister();
                 } else {
-                    NetworkConnectivity.INSTANCE.showNoInternetMessage(CorperRegisterActivity.this);
+                    MyUtilClass.INSTANCE.showNoInternetMessage(CorperRegisterActivity.this);
                 }
             }
         });
 
-        mLoginFormView = findViewById(R.id.corper_register_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        TextView loginPage = findViewById(R.id.sign_in_tv);
+        loginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CorperRegisterActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
         setupSpinner();
     }
 
@@ -162,7 +173,9 @@ public class CorperRegisterActivity extends AppCompatActivity {
         mCallUpNumber.setError(null);
         mCorperFirstName.setError(null);
         mCorperLastName.setError(null);
-        mDateOfBirth.setError(null);
+        mDay.setError(null);
+        mMonth.setError(null);
+        mYear.setError(null);
         mCorperNumber.setError(null);
         mCorperInstitution.setError(null);
         mCorperDiscipline.setError(null);
@@ -174,11 +187,14 @@ public class CorperRegisterActivity extends AppCompatActivity {
         String callUpNumber = mCallUpNumber.getText().toString().trim();
         String corperFirstName = mCorperFirstName.getText().toString().trim();
         String corperLastName = mCorperLastName.getText().toString().trim();
-        String dateOfBirth = mDateOfBirth.getText().toString().trim();
+        String day = mDay.getText().toString().trim();
+        String month = mMonth.getText().toString().trim();
+        String year = mYear.getText().toString().trim();
         String corperNumber = mCorperNumber.getText().toString().trim();
         String corperInstitution = mCorperInstitution.getText().toString().trim();
         String corperDiscipline = mCorperDiscipline.getText().toString().trim();
         String corperConfirmPassword = mCorperConfirmPassword.getText().toString().trim();
+        String dateOfBirth = month + "/" + day + "/" + year;
 
         boolean cancel = false;
         View focusView = null;
@@ -240,9 +256,29 @@ public class CorperRegisterActivity extends AppCompatActivity {
 
 
         //check for empty date of birth
-        if (TextUtils.isEmpty(dateOfBirth)) {
-            mDateOfBirth.setError(getString(R.string.error_field_required));
-            focusView = mDateOfBirth;
+        if (TextUtils.isEmpty(day)) {
+            mDay.setError(getString(R.string.error_field_required));
+            focusView = mDay;
+            cancel = true;
+        } else if (Integer.valueOf(day) > 31 || Integer.valueOf(day) < 1){
+            mDay.setError("Must be within 1 to 31");
+            focusView = mDay;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(month)) {
+            mMonth.setError(getString(R.string.error_field_required));
+            focusView = mMonth;
+            cancel = true;
+        } else  if (Integer.valueOf(month) > 12 || Integer.valueOf(month) < 1){
+            mMonth.setError("Must be within 1 to 12");
+            focusView = mMonth;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(year)) {
+            mYear.setError(getString(R.string.error_field_required));
+            focusView = mYear;
             cancel = true;
         }
 
@@ -281,7 +317,6 @@ public class CorperRegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
-
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -289,35 +324,46 @@ public class CorperRegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-
-            Call<ResponseBody> register = ServiceGenerator.INSTANCE.getApiMethods().registerCorper(new Corper(callUpNumber,
-                    corperFirstName, corperLastName, corperGender, dateOfBirth, corperNumber,
-                    nyscState, corperInstitution, corperDiscipline, email, password, corperConfirmPassword));
-
-            register.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
-
-                    showProgress(false);
-                    if (response != null) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                            finish();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    showProgress(false);
-                }
-            });
+            showProgress();
+            register(new Corp(corperFirstName,
+                    corperLastName, corperGender, dateOfBirth, corperNumber, email,
+                    password, corperConfirmPassword, callUpNumber, nyscState, corperInstitution, corperDiscipline));
         }
     }
 
+    private void register(Corp corp){
+        ServiceGenerator.INSTANCE.getApiMethods().registerCorper(corp)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
+
+                        hideProgress();
+                        if (response != null) {
+                            System.out.println(response.message());
+                            System.out.println(response.code());
+                            System.out.println(response.errorBody());
+
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CorperRegisterActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }else MyUtilClass.INSTANCE.showErrorMessage(CorperRegisterActivity.this, response, "ModelState");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @Nullable Throwable t) {
+                        hideProgress();
+                        if (t != null)
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG)
+                                    .show();
+                    }
+                });
+    }
+
     private boolean isEmailValid(String email) {
+
         return email.contains("@");
     }
 
@@ -332,33 +378,20 @@ public class CorperRegisterActivity extends AppCompatActivity {
     }
 
 
+
+
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
+    private void showProgress() {
+        mProgressView.setVisibility(View.VISIBLE);
+        registerButton.setEnabled(false);
+    }
 
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+    private void hideProgress(){
+        mProgressView.setVisibility(View.GONE);
+        registerButton.setEnabled(true);
     }
 }
 

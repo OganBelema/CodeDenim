@@ -10,10 +10,10 @@
             android:id="@+id/nav_myCourses"
             android:icon="@drawable/ic_school_black_24dp"
             android:title="My Courses"/>
-        <item
+        <!--<item
             android:id="@+id/nav_courses"
             android:icon="@drawable/ic_library_books_black_24dp"
-            android:title="Categories" />
+            android:title="Categories" />-->
         <!--<item
             android:id="@+id/nav_joinCompetition"
             android:title="Join Competition"
@@ -22,17 +22,11 @@
             android:id="@+id/nav_setting"
             android:icon="@mipmap/ic_settings_black_24dp"
             android:title="Settings"/>-->
-        <item
-            android:id="@+id/nav_aboutUs"
-            android:icon="@drawable/ic_info_black_24dp"
-            android:title="About us"/>
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
-            android:title="Log out"/>
+
+
     </group>
 
-    <item android:title="Socials">
+    <!--<item android:title="Socials">
         <menu>
             <group android:id="@+id/soc_group">
                 <item android:id="@+id/nav_twitter"
@@ -43,7 +37,23 @@
                     android:title="Facebook"/>
             </group>
         </menu>
-    </item>
+    </item>-->
+
+    <!--<item android:orderInCategory="200">
+        <menu>
+            <group >
+                &lt;!&ndash;<item
+                    android:id="@+id/nav_aboutUs"
+                    android:icon="@drawable/ic_info_black_24dp"
+                    android:title="About us"/>&ndash;&gt;
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_exit_to_app_black_24dp"
+                    android:title="Log out"/>
+            </group>
+        </menu>
+    </item>-->
 
 
 </menu>

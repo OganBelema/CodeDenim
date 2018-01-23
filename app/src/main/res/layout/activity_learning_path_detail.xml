@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="6dp"
-    app:cardCornerRadius="10dp">
-<android.support.v4.widget.NestedScrollView
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context="com.example.ogan.codedenim.LearningPathDetailActivity">
-
+    android:background="@android:color/white">
     <ImageView
         android:id="@+id/learningPathPic_img"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"/>
+        android:layout_height="240dp"
+        android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/learningPathName_tv"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:textSize="30sp"/>
+        android:layout_below="@id/learningPathPic_img"
+        android:layout_above="@id/learningPath_enroll_btn"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/learningPathDescription_tv"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/learningPathPrice_tv"
-        android:textSize="18sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/learningPathName_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@android:color/black"
+                android:textSize="30sp"/>
 
-</LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+            <TextView
+                android:id="@+id/learningPathDescription_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/learningPathPrice_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <Button
         android:id="@+id/learningPath_enroll_btn"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        android:textColor="@android:color/white"
-        android:background="@drawable/mybutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_line_border"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="@color/colorPrimary" />
+
+    <!--<ProgressBar
+        android:id="@+id/learningPath_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
-</android.support.v7.widget.CardView>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>-->
+</RelativeLayout>

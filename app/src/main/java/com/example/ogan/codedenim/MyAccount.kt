@@ -7,6 +7,8 @@ import com.example.ogan.codedenim.sessionManagement.UserSessionManager
 
 class MyAccount : AppCompatActivity() {
 
+    private var email: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_account)
@@ -15,8 +17,13 @@ class MyAccount : AppCompatActivity() {
         // get user data from session
         val user = UserSessionManager.getUserDetails()
 
-        // get email
-        val email = user[UserSessionManager.KEY_EMAIL]
+        try {
+            // get email
+            email = user[UserSessionManager.KEY_EMAIL]
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+
         userEmail.text = resources.getString(R.string.user_detail_email, email)
     }
 }

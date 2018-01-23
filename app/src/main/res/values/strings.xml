@@ -30,11 +30,13 @@
     <string name="money">₦%s</string>
     <string name="learning_path_name">Name: %s</string>
     <string name="learning_path_price">Price: ₦%s</string>
-    <string name="learning_path_desc">Description: %s</string>
+    <string name="learning_path_pay_button">Pay ₦%s</string>
+    <string name="learning_path_desc">Description:\n %s</string>
     <string name="title_activity_login2">Sign in</string>
 
-    <string name="corper">Corper</string>
+    <string name="corp">Corper</string>
     <string name="enroll">Enroll</string>
+    <string name="resume">Resume</string>
 
     <string name="user_detail_email"><b>Email</b>: %s</string>
     <string name="user_detail_name"><b>Name</b>: %s</string>
@@ -54,4 +56,27 @@
     <string name="card_expiry_date">Card Expiry Date: </string>
     <string name="card_month">MM</string>
     <string name="card_year">YY</string>
+
+    <!--course detail-->
+    <string name="course_category">Course Category: %s</string>
+    <string name="course_name">Course Name: %s</string>
+    <string name="course_description">Course Description: %s</string>
+    <string name="course_code">Course Code: %s</string>
+    <string name="course_length">Course Length: %d</string>
+
+    <!--module details-->
+    <string name="module_name">ModuleName: %s</string>
+    <string name="module_expected_time">Expected Time: %s minutes</string>
+
+    <!--topic details-->
+    <string name="topic_name">Topic Name: %s</string>
+    <string name="topic_expected_time">Expected Time: %s minutes</string>
+
+    <!--Question details-->
+    <string name="comments">%d Comment(s)</string>
+    <string name="asked_by">%s %s</string>
+
+    <string name="don_t_have_an_account">Don\'t have an account? <b><font color='#009933'>Sign up</font></b></string>
+    <string name="have_an_account">Already have an account? <b><font color='#009933'>Sign in</font></b></string>
+
 </resources>

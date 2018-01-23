@@ -1,55 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
-    tools:context="com.example.ogan.codedenim.UserCategory">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/nysc_logo"/>
-
-    <Button
-        android:id="@+id/corperRegisterBtn"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/welcome_txt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am a Corper" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/lobster_regular"
+        android:textSize="50sp"
+        android:text="Welcome"/>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/student"/>
-
-    <Button
-        android:id="@+id/studentRegisterBtn"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/sign_up_txt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I am a Student" />
+        android:layout_marginBottom="26dp"
+        android:layout_below="@id/welcome_txt"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/lobster_regular"
+        android:textSize="20sp"
+        android:text="Sign up as a..."/>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/others"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@id/sign_up_txt"
+        android:layout_above="@id/sign_in_tv"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingEnd="8dp"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            tools:context="com.example.ogan.codedenim.UserCategory">
 
-    <Button
-        android:id="@+id/othersRegisterButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="150dp"
+            <LinearLayout
+                android:id="@+id/corperRegisterBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/corper"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="CORPER"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/studentRegisterBtn"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/student"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="UNDERGRADUATE"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/othersRegisterButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/others"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="PROFESSIONAL/OTHERS"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/sign_in_tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Others" />
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:text="@string/have_an_account" />
 
-</LinearLayout>
-</ScrollView>
+</RelativeLayout>

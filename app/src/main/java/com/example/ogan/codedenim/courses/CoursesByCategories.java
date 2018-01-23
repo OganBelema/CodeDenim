@@ -8,13 +8,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.example.ogan.codedenim.NetworkConnectivity;
+import com.example.ogan.codedenim.MyUtilClass;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
 import com.example.ogan.codedenim.adapters.CourseAdapter;
@@ -72,7 +70,7 @@ public class CoursesByCategories extends AppCompatActivity {
 
     private void getData(){
         //GET apiMethods
-        if (NetworkConnectivity.INSTANCE.checkNetworkConnecttion(getApplicationContext())) {
+        if (MyUtilClass.INSTANCE.checkNetworkConnection(getApplicationContext())) {
             ServiceGenerator.INSTANCE.getApiMethods().getCourses(categoryId).enqueue(new Callback<ArrayList<Course>>() {
                 @Override
                 public void onResponse(@NonNull Call<ArrayList<Course>> call, @Nullable Response<ArrayList<Course>> response) {
@@ -80,14 +78,14 @@ public class CoursesByCategories extends AppCompatActivity {
                     if (response != null) {
                         System.out.println(response.message());
                         if (response.isSuccessful()) {
-
+                            System.out.println("response body" + response.body());
                             results = response.body();
                             coursesByCategoriesAdapter = new CourseAdapter(results);
                             recyclerView.setAdapter(coursesByCategoriesAdapter);
                             progressBar.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
 
-                        }
+                        } else MyUtilClass.INSTANCE.showAlert(CoursesByCategories.this, "Sorry, an error occurred. Swipe down to refresh");
                     }
                 }
 
@@ -95,15 +93,12 @@ public class CoursesByCategories extends AppCompatActivity {
                 public void onFailure(@NonNull Call<ArrayList<Course>> call, @Nullable Throwable t) {
 
                     progressBar.setVisibility(View.GONE);
-                    if (t!=null) {
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                        Log.e("error", t.getMessage());
-                    }
+                    MyUtilClass.INSTANCE.showAlert(CoursesByCategories.this, "Sorry, an error occurred. Swipe down to refresh");
                 }
             });
         } else {
             progressBar.setVisibility(View.GONE);
-            NetworkConnectivity.INSTANCE.showNoInternetMessage(CoursesByCategories.this);
+            MyUtilClass.INSTANCE.showNoInternetMessage(CoursesByCategories.this);
         }
     }
 

@@ -90,17 +90,20 @@ public class UserSessionManager {
 	 * Get stored session data
 	 * */
 	public static HashMap<String, String> getUserDetails(){
-		
 		//Use hashmap to store user credentials
 		HashMap<String, String> user = new HashMap<String, String>();
-		
-		// user email
-		user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
-		
-		// user password
-		user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, null));
-		
-		// return user
+		try {
+			// user email
+			user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, "email"));
+
+			// user password
+			user.put(KEY_PASSWORD, pref.getString(KEY_PASSWORD, "password"));
+
+			// return user
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		return user;
 	}
 	

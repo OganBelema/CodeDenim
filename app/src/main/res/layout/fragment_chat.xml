@@ -1,14 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forum_swipe"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.ogan.codedenim.ForumActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="20sp"
-        android:text="Chat" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/question_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:id="@+id/question_pr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/post_question_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_black_24dp"
+            android:layout_gravity="bottom|end"/>
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

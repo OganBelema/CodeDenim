@@ -1,9 +1,6 @@
 package com.example.ogan.codedenim.register;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,15 +11,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ogan.codedenim.NetworkConnectivity;
+import com.example.ogan.codedenim.MyUtilClass;
 import com.example.ogan.codedenim.R;
 import com.example.ogan.codedenim.ServiceGenerator;
+import com.example.ogan.codedenim.login.LoginActivity;
 import com.example.ogan.codedenim.user.Student;
-
-import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -36,18 +34,20 @@ public class StudentRegisterActivity extends AppCompatActivity {
 
     // UI references.
     private View mProgressView;
-    private View mLoginFormView;
     private Spinner genderSpinner;
     private TextInputEditText mMatricNumber;
     private TextInputEditText mFirstName;
     private TextInputEditText mLastName;
-    private TextInputEditText mDateOfBirth;
+    private EditText mDay;
+    private EditText mMonth;
+    private EditText mYear;
     private TextInputEditText mPhoneNumber;
     private TextInputEditText mInstitution;
     private TextInputEditText mDiscipline;
     private TextInputEditText mEmail;
     private TextInputEditText mPassword;
     private TextInputEditText mConfirmPassword;
+    private Button registerButton;
 
     private String gender;
 
@@ -60,7 +60,9 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mMatricNumber = findViewById(R.id.matric_number_et);
         mFirstName = findViewById(R.id.first_name_student);
         mLastName = findViewById(R.id.last_name_student);
-        mDateOfBirth = findViewById(R.id.date_of_birth_student);
+        mDay = findViewById(R.id.day_et);
+        mMonth = findViewById(R.id.month_et);
+        mYear = findViewById(R.id.year_et);
         mInstitution = findViewById(R.id.student_institution);
         mPhoneNumber = findViewById(R.id.mobile_number_student);
         mDiscipline = findViewById(R.id.student_discipline);
@@ -68,18 +70,27 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.student_password);
         mConfirmPassword = findViewById(R.id.student_confirm_password);
 
-        mLoginFormView = findViewById(R.id.student_register_form);
         mProgressView = findViewById(R.id.student_login_progress);
 
-        Button registerButton = findViewById(R.id.student_register_button);
+        registerButton = findViewById(R.id.student_register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(NetworkConnectivity.INSTANCE.checkNetworkConnecttion(getApplicationContext())){
+                if(MyUtilClass.INSTANCE.checkNetworkConnection(getApplicationContext())){
                     attemptRegister();
                 } else {
-                    NetworkConnectivity.INSTANCE.showNoInternetMessage(StudentRegisterActivity.this);
+                    MyUtilClass.INSTANCE.showNoInternetMessage(StudentRegisterActivity.this);
                 }
+            }
+        });
+
+        TextView loginPage = findViewById(R.id.sign_in_tv);
+        loginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StudentRegisterActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }
         });
 
@@ -127,7 +138,9 @@ public class StudentRegisterActivity extends AppCompatActivity {
         mMatricNumber.setError(null);
         mFirstName.setError(null);
         mLastName.setError(null);
-        mDateOfBirth.setError(null);
+        mDay.setError(null);
+        mMonth.setError(null);
+        mYear.setError(null);
         mPhoneNumber.setError(null);
         mInstitution.setError(null);
         mDiscipline.setError(null);
@@ -139,11 +152,14 @@ public class StudentRegisterActivity extends AppCompatActivity {
         String matricNumber = mMatricNumber.getText().toString().trim();
         String firstname = mFirstName.getText().toString().trim();
         String lastName = mLastName.getText().toString().trim();
-        String dateOfBirth = mDateOfBirth.getText().toString().trim();
+        String day = mDay.getText().toString().trim();
+        String month = mMonth.getText().toString().trim();
+        String year = mYear.getText().toString().trim();
         String phoneNumber = mPhoneNumber.getText().toString().trim();
         String institution = mInstitution.getText().toString().trim();
         String discipline = mDiscipline.getText().toString().trim();
         String confirmPassword = mConfirmPassword.getText().toString().trim();
+        String dateOfBirth = month + "/" + day + "/" + year;
 
         boolean cancel = false;
         View focusView = null;
@@ -183,10 +199,6 @@ public class StudentRegisterActivity extends AppCompatActivity {
             mMatricNumber.setError(getString(R.string.error_field_required));
             focusView = mMatricNumber;
             cancel = true;
-        } else if (!isCallUpNoValid(matricNumber)) {
-            mMatricNumber.setError("Call up number is invalid");
-            focusView = mMatricNumber;
-            cancel = true;
         }
 
         // Check for empty firstname
@@ -205,9 +217,29 @@ public class StudentRegisterActivity extends AppCompatActivity {
 
 
         //check for empty date of birth
-        if (TextUtils.isEmpty(dateOfBirth)) {
-            mDateOfBirth.setError(getString(R.string.error_field_required));
-            focusView = mDateOfBirth;
+        if (TextUtils.isEmpty(day)) {
+            mDay.setError(getString(R.string.error_field_required));
+            focusView = mDay;
+            cancel = true;
+        } else if (Integer.valueOf(day) > 31 || Integer.valueOf(day) < 1){
+            mDay.setError("Must be within 1 to 31");
+            focusView = mDay;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(month)) {
+            mMonth.setError(getString(R.string.error_field_required));
+            focusView = mMonth;
+            cancel = true;
+        } else  if (Integer.valueOf(month) > 12 || Integer.valueOf(month) < 1){
+            mMonth.setError("Must be within 1 to 12");
+            focusView = mMonth;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(year)) {
+            mYear.setError(getString(R.string.error_field_required));
+            focusView = mYear;
             cancel = true;
         }
 
@@ -247,54 +279,49 @@ public class StudentRegisterActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-
-            Call<ResponseBody> register = ServiceGenerator.INSTANCE.getApiMethods().registerStudent(new Student(firstname, lastName, gender, dateOfBirth,
+            showProgress();
+            register(new Student(firstname, lastName, gender, dateOfBirth,
                     phoneNumber, email, password, confirmPassword, institution, discipline, matricNumber));
+        }
+    }
 
-            register.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
+    private void register(Student student){
+        ServiceGenerator.INSTANCE.getApiMethods().registerStudent(student)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ResponseBody> call, @Nullable Response<ResponseBody> response) {
 
-                    showProgress(false);
-                    if (response != null) {
-                        System.out.println(response.message());
-                        System.out.println(response.code());
-                        System.out.println(response.errorBody());
+                        hideProgress();
+                        if (response != null) {
+                            System.out.println(response.message());
+                            System.out.println(response.code());
+                            System.out.println(response.errorBody());
 
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            try {
-                                JSONObject jObjError = new JSONObject(response.errorBody().string());
-                                System.out.println(jObjError.getString("message"));
-                                Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
-                            } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                            }
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Registration Successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(StudentRegisterActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            } else MyUtilClass.INSTANCE.showErrorMessage(StudentRegisterActivity.this, response, "ModelState");
                         }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    @Override
+                    public void onFailure(@NonNull Call<ResponseBody> call, @Nullable Throwable t) {
 
-                    showProgress(false);
-                    System.out.println(t.getMessage());
-                }
-            });
-        }
+                        hideProgress();
+                        if (t != null){
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+                });
     }
 
     private boolean isEmailValid(String email) {
         return email.contains("@");
     }
 
-    private boolean isCallUpNoValid(String callUpNo) {
-
-        return callUpNo.length() > 5;
-    }
 
     private boolean isPasswordValid(String password) {
 
@@ -302,33 +329,14 @@ public class StudentRegisterActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+    private void showProgress() {
+       mProgressView.setVisibility(View.VISIBLE);
+       registerButton.setEnabled(false);
+    }
 
-        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            }
-        });
-
-        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-        mProgressView.animate().setDuration(shortAnimTime).alpha(
-                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            }
-        });
+    private void hideProgress(){
+        mProgressView.setVisibility(View.GONE);
+        registerButton.setEnabled(true);
     }
 }
 

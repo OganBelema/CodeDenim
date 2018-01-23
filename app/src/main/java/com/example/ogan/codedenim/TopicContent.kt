@@ -5,11 +5,9 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.Toast
 import com.example.ogan.codedenim.adapters.MaterialUploadAdapter
 import com.example.ogan.codedenim.gson.MaterialUpload
 import retrofit2.Call
@@ -67,17 +65,13 @@ class TopicContent : AppCompatActivity() {
                                 recyclerView.adapter = myAdapter
                                 progressBar.visibility = View.GONE
                                 recyclerView.visibility = View.VISIBLE
-                            }
+                            } else MyUtilClass.showAlert(this@TopicContent, "Sorry, an error occurred. Swipe down to try again")
                         }
                     }
 
                     override fun onFailure(call: Call<ArrayList<MaterialUpload>>, t: Throwable?) {
                         progressBar.visibility = View.GONE
-                        if (t != null) {
-                            Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
-                            Log.e("error", t.message)
-                            //System.out.println(response.body());
-                        }
+                        MyUtilClass.showAlert(this@TopicContent, "Sorry, an error occurred. Swipe down to try again")
                     }
                 })
     }

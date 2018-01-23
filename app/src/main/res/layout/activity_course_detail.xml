@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/course_detail_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:id="@+id/cd_progressbar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/course_detail_container">
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        tools:context="com.example.ogan.codedenim.courses.CourseDetailActivity">
-
+        android:layout_height="match_parent">
         <ImageView
             android:id="@+id/course_detail_img"
-            android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/course_name"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp" />
+            android:layout_below="@id/course_detail_img"
+            android:layout_above="@id/button_enroll">
 
-        <TextView
-            android:id="@+id/course_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp" />
+            <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/course_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp"
+                tools:context="com.example.ogan.codedenim.courses.CourseDetailActivity">
 
-        <TextView
-            android:id="@+id/course_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/course_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/course_expected_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp" />
+                <TextView
+                    android:id="@+id/course_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/course_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/course_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/course_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/course_expected_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
         <Button
             android:id="@+id/button_enroll"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/mybutton"
-            android:text="Continue" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_line_border"
+            android:text="Continue"
+            android:textColor="@color/colorPrimary" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/forum_btn"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/ic_forum_black_24dp"
-            app:layout_anchor="@id/course_detail_img"
-            app:layout_anchorGravity="bottom|end"/>
-    </android.support.design.widget.CoordinatorLayout>
-</ScrollView>
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/forum_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_forum_black_24dp"
+        app:layout_anchor="@id/course_detail_img"
+        app:layout_anchorGravity="bottom|end" />
+</android.support.design.widget.CoordinatorLayout>

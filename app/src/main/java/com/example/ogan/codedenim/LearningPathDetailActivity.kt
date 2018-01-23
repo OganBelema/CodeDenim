@@ -1,16 +1,19 @@
 package com.example.ogan.codedenim
 
+import android.net.Uri
 import android.os.Bundle
+import android.support.customtabs.CustomTabsIntent
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.ogan.codedenim.fragments.PaymentFragment
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_learning_path_detail.*
 
 class LearningPathDetailActivity : AppCompatActivity() {
 
     private var categoryId: Int = 0
+    private var learningPathName: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,14 +23,12 @@ class LearningPathDetailActivity : AppCompatActivity() {
         val name = findViewById<TextView>(R.id.learningPathName_tv)
         val description = findViewById<TextView>(R.id.learningPathDescription_tv)
         val amount = findViewById<TextView>(R.id.learningPathPrice_tv)
-        val enrollBtn = findViewById<Button>(R.id.learningPath_enroll_btn)
 
         val intent = intent
         val imagePath = intent.getStringExtra("ImageLocation")
-        val learningPathName = intent.getStringExtra("CategoryName")
-        val learningPathDesc = intent.getStringExtra("CategoryDescription")
+        learningPathName = intent.getStringExtra("CategoryName")
+        val learningPathDesc = intent.getStringExtra("CategoryDescription") ?: "No description"
         val learningPathPrice = intent.getStringExtra("CategoryPrice")
-        val studentType = intent.getStringExtra("StudentType")
         categoryId = intent.getIntExtra("CategoryId", 0)
         title = learningPathName
 
@@ -35,19 +36,19 @@ class LearningPathDetailActivity : AppCompatActivity() {
         name.text = learningPathName
         description.text = resources.getString(R.string.learning_path_desc, learningPathDesc)
         amount.text = resources.getString(R.string.learning_path_price, learningPathPrice)
-        if (studentType == resources.getString(R.string.corper)) {
-            enrollBtn.text = resources.getString(R.string.enroll)
+        learningPath_enroll_btn.text =  resources.getString(R.string.learning_path_pay_button, learningPathPrice)
 
-            enrollBtn.setOnClickListener {
-                /*Intent intent = new Intent(getApplicationContext(), CoursesByCategories.class);
-                    intent.putExtra("CategoryId", categoryId);
-                    intent.putExtra("CategoryName", learningPathName);
-                    startActivity(intent);*/
-                val newFragment = PaymentFragment()
-                newFragment.show(supportFragmentManager, "missiles")
-            }
+        //val user = UserSessionManager.getUserDetails()
+        //val email = user[UserSessionManager.KEY_EMAIL]
 
-        }//TODO: change this to check if student has enrolled
+        learningPath_enroll_btn.setOnClickListener {
+            val url = "http://codedenim.azurewebsites.net/CourseCategories/CategoryDetails/$categoryId"
+            val builder = CustomTabsIntent.Builder()
+            builder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+            val customTabIntent = builder.build()
+            customTabIntent.launchUrl(this, Uri.parse(url))
+            finish()
+        }
 
 
     }

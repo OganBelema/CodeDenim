@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ogan.codedenim.register.CorperRegisterActivity">
+    android:background="@android:color/white"
+    tools:context="com.example.ogan.codedenim.register.OthersRegisterActivity">
 
-    <!-- Login progress -->
-
-    <ProgressBar
-        android:id="@+id/others_login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/register_tv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="Sign Up"
+        android:fontFamily="@font/lobster_regular"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/other_register_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/other_register_button"
+        android:layout_below="@id/register_tv"
+        android:layout_margin="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,12 +33,17 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_shape">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/user_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/user_icon"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="First name"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -48,13 +52,40 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/user_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/user_icon"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="Last name"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/others_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/email_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/email_icon"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -66,10 +97,68 @@
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape"
                 android:padding="16dp"
                 android:spinnerMode="dropdown" />
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/calender_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/calender_icon"
+                    android:padding="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="D.O.B"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/day_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="DD"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/month_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="MM"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:maxLines="1" />
+
+                <EditText
+                    android:id="@+id/year_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="YYYY"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="4"/>
+            </LinearLayout>
+
+            <!--<android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -78,20 +167,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Date Of Birth(MM-DD-YY)"
+                    android:drawableStart="@drawable/calender_icon"
+                    android:drawableLeft="@drawable/calender_icon"
+                    android:drawablePadding="16dp"
                     android:inputType="date"
                     android:maxLines="1"
                     android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout>-->
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/mobile_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/phone_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/phone_icon"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="Mobile Number"
                     android:inputType="number"
                     android:maxLines="1"
@@ -99,30 +197,22 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/others_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape"
                 app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/other_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/password_icon"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -133,12 +223,18 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/edit_text_shape"
                 app:passwordToggleEnabled="true">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/other_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/password_icon"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="Confirm Password"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -146,21 +242,47 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/other_register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/mybutton"
-                android:text="@string/action_register"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
 
         </LinearLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/other_register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sign_in_tv"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_style"
+        android:text="@string/action_register"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sign_in_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textSize="16sp"
+        android:text="@string/have_an_account" />
+
+    <!-- Login progress -->
+
+    <ProgressBar
+        android:id="@+id/others_login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

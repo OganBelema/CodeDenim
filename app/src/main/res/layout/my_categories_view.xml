@@ -3,8 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="10dp">
+    android:layout_margin="8dp">
 <LinearLayout
     android:id="@+id/categories_card"
     android:layout_width="match_parent"
@@ -14,14 +13,13 @@
     <ImageView
         android:id="@+id/category_image"
         android:layout_width="100dp"
-        android:scaleType="fitXY"
-        android:layout_height="100dp"/>
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="vertical">
 
         <TextView
@@ -31,7 +29,6 @@
             android:textStyle="bold"
             android:textSize="24sp"/>
             <!--android:textColor="#99e"-->
-
 
         <TextView
             android:id="@+id/categories_description_txt"
