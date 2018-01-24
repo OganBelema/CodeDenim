@@ -1,6 +1,7 @@
 package com.example.ogan.codedenim.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,22 +9,19 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.ogan.codedenim.R
+import com.example.ogan.codedenim.ReplyForumActivity
 import com.example.ogan.codedenim.gson.ForumQuestion
 import java.util.*
 
 /**
  * Created by belema on 1/4/18.
  */
-class ForumQuestionAdapter(private val forumQuestions: ArrayList<ForumQuestion>?, private val clickListener: ForumClickListener) : RecyclerView.Adapter<ForumQuestionAdapter.ForumQuestionHolder>() {
+class ForumQuestionAdapter(private val forumQuestions: ArrayList<ForumQuestion>?) : RecyclerView.Adapter<ForumQuestionAdapter.ForumQuestionHolder>() {
     private lateinit var context: Context
-
-    companion object {
-        var mClickListener: ForumClickListener? = null
-    }
 
     override fun onBindViewHolder(holder: ForumQuestionHolder, position: Int) {
 
-        mClickListener = clickListener
+
 
         forumQuestions?.let {
             val questionTitle = forumQuestions[holder.adapterPosition].Title
@@ -32,6 +30,7 @@ class ForumQuestionAdapter(private val forumQuestions: ArrayList<ForumQuestion>?
             val lastName = forumQuestions[holder.adapterPosition].LastName
             val postTime = forumQuestions[holder.adapterPosition].PostDate
             val commentNo = forumQuestions[holder.adapterPosition].Count
+            val questionId = forumQuestions[holder.adapterPosition].ForumQuestionId
 
             holder.questionTitle.text = questionTitle
             holder.questionName.text = questionName
@@ -39,10 +38,12 @@ class ForumQuestionAdapter(private val forumQuestions: ArrayList<ForumQuestion>?
             holder.postTime.text = postTime
             holder.commentNo.text = context.resources.getString(R.string.comments, commentNo)
             holder.questionCard.setOnClickListener {
-                if (mClickListener != null)
-                    mClickListener?.onBtnClick(position)
-            }
+                val intent = Intent(context, ReplyForumActivity::class.java)
+                intent.putExtra("questionName", questionName)
+                intent.putExtra("questionId", questionId)
+                context.startActivity(intent)
 
+            }
         }
     }
 
@@ -74,7 +75,4 @@ class ForumQuestionAdapter(private val forumQuestions: ArrayList<ForumQuestion>?
         }
     }
 
-    interface ForumClickListener {
-        fun onBtnClick(position: Int)
-    }
 }

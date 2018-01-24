@@ -80,5 +80,6 @@
     <string name="have_an_account">Already have an account? <b><font color='#009933'>Sign in</font></b></string>
 
     <string name="tap">Tap for %s</string>
+    <string name="answer_by">Answered by: <b>%s</b></string>
 
 </resources>

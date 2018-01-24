@@ -56,4 +56,10 @@ interface ApiMethods {
     @POST("api/forumquestions")
     fun postQuestion(@Query("email") email: String?, @Body body: ForumQuestion ): Call<ResponseBody>
 
+    @GET("api/forumanswers")
+    fun getAnswers(@Query("id") questionId: String?): Call<ArrayList<ForumAnswer>>
+
+    @POST("api/forumanswers")
+    fun postAnswer(@Query("email") email: String?, @Body body: ForumAnswer): Call<ResponseBody>
+
 }

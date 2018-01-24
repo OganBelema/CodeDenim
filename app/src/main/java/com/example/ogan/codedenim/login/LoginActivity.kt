@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
-import android.widget.*
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import com.example.ogan.codedenim.*
 import com.example.ogan.codedenim.sessionManagement.UserSessionManager
 import okhttp3.ResponseBody
@@ -142,9 +145,7 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable?) {
                         hideProgress()
-                        if (t != null)
-                            Toast.makeText(applicationContext, t.localizedMessage, Toast.LENGTH_LONG)
-                                    .show()
+                        MyUtilClass.showAlert(this@LoginActivity, "An error occurred. Please try again.")
 
                     }
                 })

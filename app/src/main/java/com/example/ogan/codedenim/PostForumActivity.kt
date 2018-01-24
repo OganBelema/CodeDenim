@@ -55,10 +55,22 @@ class PostForumActivity : AppCompatActivity() {
     }
 
     private fun postQuestion(){
-        progress.visibility = View.VISIBLE
-
         val title = titleEt.text.toString().trim()
         val question = questionEt.text.toString().trim()
+
+        if (question.isNullOrEmpty()){
+            questionEt.error = "Can't be empty"
+            questionEt.requestFocus()
+            return
+        }
+
+        if (title.isNullOrEmpty()){
+            titleEt.error = "Can't be empty"
+            titleEt.requestFocus()
+            return
+        }
+
+        progress.visibility = View.VISIBLE
 
         val forumQuestion = ForumQuestion()
         forumQuestion.Title = title

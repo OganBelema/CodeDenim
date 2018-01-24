@@ -96,8 +96,13 @@
             android:name=".fragments.AudioActivity"
             android:label="@string/audio_content"
             android:parentActivityName=".TopicContent" />
-        <activity android:name=".PostForumActivity"
+        <activity
+            android:name=".PostForumActivity"
+            android:parentActivityName=".ForumActivity" />
+        <activity android:name=".ReplyForumActivity"
             android:parentActivityName=".ForumActivity"/>
+        <activity android:name=".courses.PostReplyActivity"
+            android:parentActivityName=".ReplyForumActivity"/>
     </application>
 
 </manifest>
