@@ -302,7 +302,9 @@ public class StudentRegisterActivity extends AppCompatActivity {
                                 Intent intent = new Intent(StudentRegisterActivity.this, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                            } else MyUtilClass.INSTANCE.showErrorMessage(StudentRegisterActivity.this, response, "ModelState");
+                            } else if (response.code() == 400){
+                                MyUtilClass.INSTANCE.showErrorMessage(StudentRegisterActivity.this, response, "ModelState");
+                            } else MyUtilClass.INSTANCE.showAlert(StudentRegisterActivity.this, response.message());
                         }
                     }
 
@@ -311,8 +313,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
 
                         hideProgress();
                         if (t != null){
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG)
-                                    .show();
+                            MyUtilClass.INSTANCE.showAlert(StudentRegisterActivity.this, t.getLocalizedMessage());
                         }
                     }
                 });

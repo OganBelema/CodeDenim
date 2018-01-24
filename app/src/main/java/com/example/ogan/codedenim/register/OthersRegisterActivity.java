@@ -269,7 +269,9 @@ public class OthersRegisterActivity extends AppCompatActivity {
                         Intent intent = new Intent(OthersRegisterActivity.this, LoginActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                    } else MyUtilClass.INSTANCE.showErrorMessage(OthersRegisterActivity.this, response, "ModelState");
+                    } else if (response.code() == 400){
+                        MyUtilClass.INSTANCE.showErrorMessage(OthersRegisterActivity.this, response, "ModelState");
+                    } else MyUtilClass.INSTANCE.showAlert(OthersRegisterActivity.this, response.message());
                 }
             }
 
@@ -279,8 +281,7 @@ public class OthersRegisterActivity extends AppCompatActivity {
                 hideProgress();
                 if (t != null) {
                     System.out.println(t.getMessage());
-                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG)
-                            .show();
+                    MyUtilClass.INSTANCE.showAlert(OthersRegisterActivity.this, t.getLocalizedMessage());
                 }
             }
         });

@@ -122,13 +122,16 @@ class LoginActivity : AppCompatActivity() {
                         hideProgress()
 
                         if (response != null) {
-                            if (response.isSuccessful) {
-                                session.createUserLoginSession(email, password)
-                                finish()
-                                val intent = Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                            } else
-                                MyUtilClass.showErrorMessage(this@LoginActivity, response)
+                            when {
+                                response.isSuccessful -> {
+                                    session.createUserLoginSession(email, password)
+                                    finish()
+                                    val intent = Intent(applicationContext, MainActivity::class.java)
+                                    startActivity(intent)
+                                }
+                                response.code() == 400 -> MyUtilClass.showErrorMessage(this@LoginActivity, response)
+                                else -> MyUtilClass.showAlert(this@LoginActivity, response.message())
+                            }
 
                             println(response.message())
                             println(response.code())

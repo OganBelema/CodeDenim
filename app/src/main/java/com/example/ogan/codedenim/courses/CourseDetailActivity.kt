@@ -13,7 +13,6 @@ import com.example.ogan.codedenim.R
 import com.example.ogan.codedenim.ServiceGenerator
 import com.example.ogan.codedenim.sessionManagement.UserSessionManager
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_course_detail.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -111,7 +110,7 @@ class CourseDetailActivity : AppCompatActivity() {
                                 intent.putExtra("courseId", courseId)
                                 intent.putExtra("courseName", courseName)
                                 startActivity(intent)
-                                finish()
+                                //finish()
                             } else MyUtilClass.showAlert(this@CourseDetailActivity, "Sorry, an error occurred. Tap button to retry")
                         }
                     }
@@ -125,15 +124,15 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private fun doneLoading(){
         progressBar.visibility = View.GONE
-        courseDetailView.visibility = View.VISIBLE
+        /*courseDetailView.visibility = View.VISIBLE
         forumBtn.visibility = View.VISIBLE
-        button_enroll.visibility = View.VISIBLE
+        button_enroll.visibility = View.VISIBLE*/
     }
 
     private fun startLoading(){
-        courseDetailView.visibility = View.INVISIBLE
+        /*courseDetailView.visibility = View.INVISIBLE
         forumBtn.visibility = View.INVISIBLE
-        button_enroll.visibility = View.INVISIBLE
+        button_enroll.visibility = View.INVISIBLE*/
         progressBar.visibility = View.VISIBLE
     }
 

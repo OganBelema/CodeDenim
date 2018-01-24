@@ -29,33 +29,34 @@ class MaterialUploadAdapter(private val materialUploads: ArrayList<MaterialUploa
 
     override fun onBindViewHolder(holder: MaterialViewHolder, position: Int) {
         materialUploads?.let {
-            val description = materialUploads[position].Description ?: "No title"
-            val fileLocation = materialUploads[position].FileLocation
 
-            holder.description.text = description
-            holder.fileType.text = fileLocation
+            //val description = materialUploads[position].Description ?: "No title"
+            val fileLocation = materialUploads[position].FileLocation
+            val fileType = materialUploads[holder.adapterPosition].FileType
+
+            holder.description.text = context.resources.getString(R.string.tap, fileType)
 
             holder.cardView.setOnClickListener {
                 val intent: Intent
-                val fileType = materialUploads[holder.adapterPosition].FileType
+
                 println(fileType)
                 when (fileType) {
                     "PDF" -> {
                         intent = Intent(context, PDFActivity::class.java)
                         intent.putExtra("fileLocation", fileLocation)
-                        intent.putExtra("name", description)
+                        intent.putExtra("name", fileType)
                         context.startActivity(intent)
                     }
                     "MP4" -> {
                         intent = Intent(context, VideoActivity::class.java)
                         intent.putExtra("fileLocation", fileLocation)
-                        intent.putExtra("name", description)
+                        intent.putExtra("name", fileType)
                         context.startActivity(intent)
                     }
                     "MP3" -> {
                         intent = Intent(context, AudioActivity::class.java)
                         intent.putExtra("fileLocation", fileLocation)
-                        intent.putExtra("name", description)
+                        intent.putExtra("name", fileType)
                         context.startActivity(intent)
                         /*intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse("https://codedenim.azurewebsites.net/MaterialUpload/$fileLocation")
@@ -64,7 +65,7 @@ class MaterialUploadAdapter(private val materialUploads: ArrayList<MaterialUploa
                     "Audio" -> {
                         intent = Intent(context, AudioActivity::class.java)
                         intent.putExtra("fileLocation", fileLocation)
-                        intent.putExtra("name", description)
+                        intent.putExtra("name", fileType)
                         context.startActivity(intent)
                         /*intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse("https://codedenim.azurewebsites.net/MaterialUpload/$fileLocation")
@@ -81,13 +82,11 @@ class MaterialUploadAdapter(private val materialUploads: ArrayList<MaterialUploa
 
     inner class MaterialViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
          val description: TextView
-         val fileType: TextView
          val cardView: CardView
 
         init {
             context = itemView.context
             description = itemView.findViewById(R.id.tv_topic_name)
-            fileType = itemView.findViewById(R.id.tv_file_type)
             cardView = itemView.findViewById(R.id.topic_content_card)
         }
     }

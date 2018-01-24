@@ -348,7 +348,9 @@ public class CorperRegisterActivity extends AppCompatActivity {
                                 Intent intent = new Intent(CorperRegisterActivity.this, LoginActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
-                            }else MyUtilClass.INSTANCE.showErrorMessage(CorperRegisterActivity.this, response, "ModelState");
+                            }else if (response.code() == 400){
+                                MyUtilClass.INSTANCE.showErrorMessage(CorperRegisterActivity.this, response, "ModelState");
+                            } else MyUtilClass.INSTANCE.showAlert(CorperRegisterActivity.this, response.message());
                         }
                     }
 
@@ -356,8 +358,7 @@ public class CorperRegisterActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Call<ResponseBody> call, @Nullable Throwable t) {
                         hideProgress();
                         if (t != null)
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG)
-                                    .show();
+                            MyUtilClass.INSTANCE.showAlert(CorperRegisterActivity.this, t.getLocalizedMessage());
                     }
                 });
     }
